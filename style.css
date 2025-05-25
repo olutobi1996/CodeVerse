@@ -7,160 +7,133 @@
   --font-body: 'Inter', sans-serif;
 }
 
+/* Reset + Base */
 body {
   margin: 0;
+  padding: 0;
   background: var(--background);
-  color: var(--text);
   font-family: var(--font-body);
-  scroll-behavior: smooth;
+  color: var(--text);
 }
 
-section {
-  padding: 80px 20px;
-  max-width: 1000px;
-  margin: auto;
+/* HERO STATIC SECTION (LOGO + TEXT BUBBLE) */
+.hero-static {
+  padding: 20px 20px 10px; /* Reduced padding to push everything up */
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
-h1, h2 {
-  font-family: var(--font-heading);
-  color: var(--primary);
-}
-
+/* 3D Logo Animation */
 .logo-container {
   perspective: 1000px;
-  display: inline-block;
-  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .logo {
-  width: 700px;
-  max-width: 90vw;
-  margin-bottom: 20px;
-  margin-top: -30px; /* moves it up by 30px */
-  animation: spinOrbit 8s infinite linear;
+  width: 240px;
+  max-width: 80vw;
   transform-style: preserve-3d;
-
-  /* More subtle glow that doesn’t darken the text */
-  filter: drop-shadow(0 0 5px var(--primary)) brightness(3.1) contrast(1.2);
-
+  filter: drop-shadow(0 0 10px var(--primary));
+  animation: floatLogo 6s ease-in-out infinite;
 }
 
+/* Optional: If you don't want spin at all, remove spin-3d */
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0) perspective(1000px); }
+  50% { transform: translateY(-10px) perspective(1000px); }
+}
 
-/* 3D spinning motion coming in and out of screen */
-@keyframes spinOrbit {
-  0% {
-    transform: rotateX(0deg) rotateY(0deg) scale(1);
-  }
-  25% {
-    transform: rotateX(180deg) rotateY(90deg) scale(1.1);
-  }
-  50% {
-    transform: rotateX(360deg) rotateY(180deg) scale(1);
-  }
-  75% {
-    transform: rotateX(540deg) rotateY(270deg) scale(1.1);
-  }
-  100% {
-    transform: rotateX(720deg) rotateY(360deg) scale(1);
+/* GLASSMORPHIC BUBBLE FOR TEXT */
+.hero-bubble {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 30px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 199, 217, 0.25);
+  
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-
-/* OPTIONAL: if you want to enable constant spinning (not with cursor) */
-.logo.spin {
-  animation: spin3D 10s infinite linear;
+/* Heading + Paragraph Styling */
+h1 {
+  font-family: var(--font-heading);
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-
-.logo-wrapper {
-  perspective: 1000px;
+p {
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-family: var(--font-heading);
+  margin: 10px 0;
+  line-height: 1.6;
 }
 
+.subline {
+  font-size: 1rem;
+  margin-top: 15px;
+}
+
+/* VIDEO SECTION */
 .hero-wrapper {
   position: relative;
-  height: 100vh;
+  width: 100%;
   overflow: hidden;
+  z-index: 1;
+  margin-top: 10px;
+  max-height: 70vh; /* Shrink video */
 }
 
-#starfield {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
+#hero-video {
   width: 100%;
   height: 100%;
-  background: black;
-}
-
-.hero {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  text-align: center;
-  padding-top: 40px;
-}
-
-.logo {
-  width: 300px;
-  max-width: 90vw;
-  margin-bottom: 20px;
-}
-
-
-.project-card {
-  background: white;
-  border: 2px solid var(--accent);
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px auto;
-  width: 80%;
-  max-width: 400px;
-  transition: transform 0.3s;
-}
-
-.project-card:hover {
-  transform: scale(1.05);
-}
-
-form input, form textarea {
   display: block;
-  width: 90%;
-  max-width: 400px;
-  margin: 10px auto;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  object-fit: cover;
+  filter: brightness(1.25) contrast(1.1);
 }
 
-form button {
-  background: var(--primary);
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
+/* Responsive Enhancements */
+@media screen and (max-width: 768px) {
+  .logo {
+    width: 180px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-bubble {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .hero-wrapper {
+    max-height: 50vh;
+  }
 }
 
-form button:hover {
-  background: var(--accent);
-}
 
-/* Scroll animation classes */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.6s ease;
-}
 
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
+
+
 
 

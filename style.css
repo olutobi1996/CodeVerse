@@ -18,13 +18,12 @@ body {
 
 /* HERO STATIC SECTION (LOGO + TEXT BUBBLE) */
 .hero-static {
-  padding: 20px 20px 10px; /* Reduced padding to push everything up */
+  padding: 20px 20px 10px;
   text-align: center;
   position: relative;
   z-index: 2;
 }
 
-/* 3D Logo Animation */
 .logo-container {
   perspective: 1000px;
   margin-bottom: 10px;
@@ -38,13 +37,11 @@ body {
   animation: floatLogo 6s ease-in-out infinite;
 }
 
-/* Optional: If you don't want spin at all, remove spin-3d */
 @keyframes floatLogo {
   0%, 100% { transform: translateY(0) perspective(1000px); }
   50% { transform: translateY(-10px) perspective(1000px); }
 }
 
-/* GLASSMORPHIC BUBBLE FOR TEXT */
 .hero-bubble {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -54,7 +51,6 @@ body {
   margin: 0 auto;
   backdrop-filter: blur(12px);
   box-shadow: 0 8px 32px rgba(0, 199, 217, 0.25);
-  
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 1.2s ease forwards;
@@ -68,7 +64,6 @@ body {
   }
 }
 
-/* Heading + Paragraph Styling */
 h1 {
   font-family: var(--font-heading);
   color: var(--primary);
@@ -96,7 +91,7 @@ p {
   overflow: hidden;
   z-index: 1;
   margin-top: 10px;
-  max-height: 70vh; /* Shrink video */
+  max-height: 70vh;
 }
 
 #hero-video {
@@ -107,7 +102,52 @@ p {
   filter: brightness(1.25) contrast(1.1);
 }
 
-/* Responsive Enhancements */
+/* TECHNOLOGIES SECTION */
+.tech-stack {
+  text-align: center;
+  padding: 60px 20px;
+  background: #fff;
+}
+
+.tech-stack h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: var(--primary);
+  font-family: var(--font-heading);
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+/* Each tech item */
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  transition: transform 0.3s ease;
+}
+
+.tech-item i {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.tech-item span {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.tech-item:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive */
 @media screen and (max-width: 768px) {
   .logo {
     width: 180px;
@@ -128,6 +168,14 @@ p {
 
   .hero-wrapper {
     max-height: 50vh;
+  }
+
+  .tech-grid {
+    gap: 20px;
+  }
+
+  .tech-item i {
+    font-size: 40px;
   }
 }
 

@@ -5,43 +5,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CodeVerse</title>
+
   <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- Fonts and Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+  <!-- Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.min.js"></script>
 </head>
 
 <body>
-  <!-- Hero Content: Logo + Glass Bubble Text -->
-  <section class="hero-static">
-    <div class="logo-container">
-      <img src="assets/CodeVerse1.png" alt="CodeVerse Logo" class="logo spin-3d" />
-    </div>
 
-    <div class="hero-bubble">
-      <h1>Welcome to CodeVerse</h1>
-      <p>Empowering businesses of every kind with cutting-edge code, digital strategy, and creative tech solutions.</p>
-      <p class="subline">Web design, development, SEO, marketing & more — all under one digital roof.</p>
-    </div>
-  </section>
+  <!-- Canvas Layers -->
+  <canvas id="starfield"></canvas>
+  <canvas id="mars-canvas"></canvas>
 
-  <!-- Hero Video Below the Text -->
-  <div class="hero-wrapper">
-    <video autoplay muted loop playsinline id="hero-video">
-      <source src="assets/showcase.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+  <!-- Hero Content -->
+  <div class="hero-bubble">
+    <h1>Welcome to CodeVerse</h1>
+    <p>Empowering businesses of every kind with cutting-edge code, digital strategy, and creative tech solutions.</p>
+    <p class="subline">Web design, development, SEO, marketing & more — all under one digital roof.</p>
   </div>
 
-  <!-- About Section -->
+  <!-- About -->
   <section class="about reveal">
     <h2>Who is Tobi?</h2>
     <p>I’m a full-stack developer blending code with creativity. Influenced by philosophy & the future.</p>
   </section>
 
-  <!-- Services Section -->
+  <!-- Services -->
   <section class="services reveal">
     <h2>What I Do</h2>
     <ul>
@@ -51,99 +49,29 @@
     </ul>
   </section>
 
-  <!-- Projects Section -->
-  <section class="projects reveal">
-    <h2>Projects</h2>
-    <div class="project-card">Project One</div>
-    <div class="project-card">Project Two</div>
-  </section>
-
+  <!-- Technologies -->
   <section class="tech-stack">
     <h2>Technologies We Use</h2>
     <div class="tech-grid">
-      <div class="tech-item">
-        <i class="devicon-html5-plain colored"></i>
-        <span>HTML5</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-css3-plain colored"></i>
-        <span>CSS3</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-javascript-plain colored"></i>
-        <span>JavaScript</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-typescript-plain colored"></i>
-        <span>TypeScript</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-react-original colored"></i>
-        <span>React</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-angularjs-plain colored"></i>
-        <span>Angular</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-vuejs-plain colored"></i>
-        <span>Vue.js</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-nodejs-plain colored"></i>
-        <span>Node.js</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-express-original colored"></i>
-        <span>Express</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-php-plain colored"></i>
-        <span>PHP</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-mysql-plain colored"></i>
-        <span>MySQL</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-mongodb-plain colored"></i>
-        <span>MongoDB</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-wordpress-plain colored"></i>
-        <span>WordPress</span>
-      </div>
-      <div class="tech-item">
-        <img src="assets/shopify_glyph.svg" alt="Shopify" class="colored-icon shopify-icon" />
-        <span>Shopify</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-git-plain colored"></i>
-        <span>Git</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-github-original colored"></i>
-        <span>GitHub</span>
-      </div>
-      <div class="tech-item">
-        <i class="devicon-docker-plain colored"></i>
-        <span>Docker</span>
-      </div>
+      <div class="tech-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
+      <div class="tech-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
+      <div class="tech-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
+      <div class="tech-item"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></div>
+      <div class="tech-item"><i class="devicon-react-original colored"></i><span>React</span></div>
+      <div class="tech-item"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></div>
+      <div class="tech-item"><i class="devicon-vuejs-plain colored"></i><span>Vue.js</span></div>
+      <div class="tech-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
+      <div class="tech-item"><i class="devicon-express-original colored"></i><span>Express</span></div>
+      <div class="tech-item"><i class="devicon-php-plain colored"></i><span>PHP</span></div>
+      <div class="tech-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
+      <div class="tech-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>
+      <div class="tech-item"><i class="devicon-wordpress-plain colored"></i><span>WordPress</span></div>
+      <div class="tech-item"><img src="assets/shopify_glyph.svg" alt="Shopify" class="colored-icon shopify-icon" /><span>Shopify</span></div>
+      <div class="tech-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+      <div class="tech-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
+      <div class="tech-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
     </div>
   </section>
 
-
-  <!-- Contact Section -->
-  <section class="contact reveal">
-    <h2>Let’s Work</h2>
-    <form>
-      <input type="text" placeholder="Name" required />
-      <input type="email" placeholder="Email" required />
-      <textarea placeholder="Tell me about your project..."></textarea>
-      <button type="submit">Send</button>
-    </form>
-  </section>
-
 </body>
-
 </html>

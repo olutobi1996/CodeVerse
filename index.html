@@ -6,32 +6,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CodeVerse</title>
 
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+    <!-- Import Map to resolve module specifiers -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js",
+        "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/"
+      }
+    }
+  </script>
 
+  <link rel="stylesheet" href="style.css" />
   <!-- Fonts and Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
-  <!-- Three.js -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.min.js"></script>
+  <script type="module" src="script.js"></script>
 </head>
 
 <body>
+  <!-- 🌍 Landing Section -->
+  <section class="landing">
+    <canvas id="mars-canvas"></canvas>
+  </section>
 
-  <!-- Canvas Layers -->
-  <canvas id="starfield"></canvas>
-  <canvas id="mars-canvas"></canvas>
-
-  <!-- Hero Content -->
-  <div class="hero-bubble">
+<!-- Hero Text BELOW Mars -->
+<section class="hero-text">
+  <div class="hero-bubble static-bubble">
     <h1>Welcome to CodeVerse</h1>
     <p>Empowering businesses of every kind with cutting-edge code, digital strategy, and creative tech solutions.</p>
     <p class="subline">Web design, development, SEO, marketing & more — all under one digital roof.</p>
   </div>
+</section>
+
 
   <!-- About -->
   <section class="about reveal">

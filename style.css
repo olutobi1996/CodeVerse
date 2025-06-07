@@ -126,8 +126,10 @@ p {
 /* TECHNOLOGIES SECTION */
 .tech-stack {
   text-align: center;
-  padding: 60px 20px;
+  padding: 60px 0;
   background: #fff;
+  overflow: hidden;
+  position: relative;
 }
 
 .tech-stack h2 {
@@ -137,18 +139,34 @@ p {
   font-family: var(--font-heading);
 }
 
-.tech-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
+/* Scroll wrapper */
+.tech-scroll-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
 }
 
+/* Scrolling container */
+.tech-scroll {
+  display: flex;
+  width: fit-content;
+  animation: scrollLeft 40s linear infinite;
+}
+
+/* Row of tech items */
+.tech-grid {
+  display: flex;
+  gap: 40px;
+  padding: 1rem 2rem;
+}
+
+/* Individual tech item */
 .tech-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100px;
+  flex-shrink: 0;
   transition: transform 0.3s ease;
 }
 
@@ -189,6 +207,23 @@ p {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
+
+/* Scroll animation */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause scroll on hover */
+.tech-scroll-wrapper:hover .tech-scroll {
+  animation-play-state: paused;
+}
+
+
 
 /* Responsive */
 @media screen and (max-width: 768px) {

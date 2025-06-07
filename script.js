@@ -50,36 +50,86 @@ const mars = new THREE.Mesh(
 );
 scene.add(mars);
 
-// === ✨ TEXT ON MARS START ===
-const textCanvas = document.createElement('canvas');
-textCanvas.width = 256;
-textCanvas.height = 64;
-const ctx = textCanvas.getContext('2d');
-ctx.fillStyle = 'white';
-ctx.font = 'bold 28px Orbitron';
-ctx.textAlign = 'center';
-ctx.fillText('CodeVerse', textCanvas.width / 2, 45);
+// === ✨ CURVED TEXT WRAPPED AROUND MARS START ===
 
-const textTexture = new THREE.CanvasTexture(textCanvas);
-textTexture.needsUpdate = true;
+// Text to display
+const displayText = ' CodeVerse To Welcome ';
 
-const textMaterial = new THREE.MeshBasicMaterial({ map: textTexture, transparent: true });
-const textGeometry = new THREE.PlaneGeometry(1.8, 0.45); // Adjust size if needed
-const textPlane = new THREE.Mesh(textGeometry, textMaterial);
+// Settings for curved text
+const charCount = displayText.length;
+const radius = 1.22;  // Slightly above Mars radius (1.2)
+const charWidth = 0.15;
+const charHeight = 0.3;
 
-// Position slightly above Mars surface
-textPlane.position.set(0, 1.5, 0);
-textPlane.rotation.x = -0.2;
+// Group to hold all character planes
+const textGroup = new THREE.Group();
 
-// Attach the text to Mars so it spins with it
-mars.add(textPlane);
-// === ✨ TEXT ON MARS END ===
+// Helper to create texture for each character
+function createCharTexture(char) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 256;
+  const context = canvas.getContext('2d');
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = '#ffffff';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+
+  // Optional shadow for readability
+  context.shadowColor = 'black';
+  context.shadowBlur = 8;
+
+  context.font = 'bold 160px Orbitron, sans-serif';
+  context.fillText(char, canvas.width / 2, canvas.height / 2);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+
+  return texture;
+}
+
+// Create a mesh for each character and position it on the sphere
+for (let i = 0; i < charCount; i++) {
+  const char = displayText[i];
+  if (char === ' ') continue; // Skip spaces for cleaner spacing
+
+  const charTexture = createCharTexture(char);
+
+  const charMaterial = new THREE.MeshBasicMaterial({ map: charTexture, transparent: true });
+  const charGeometry = new THREE.PlaneGeometry(charWidth, charHeight);
+  const charMesh = new THREE.Mesh(charGeometry, charMaterial);
+
+  // Angle for character placement around sphere's equator
+  const angle = (i / charCount) * Math.PI * 2;
+
+  // Position on circle around Y-axis (equator)
+  charMesh.position.x = radius * Math.sin(angle);
+  charMesh.position.y = 0;
+  charMesh.position.z = radius * Math.cos(angle);
+
+  // Rotate the plane to face outward from center
+  charMesh.lookAt(new THREE.Vector3(0, 0, 0));
+  charMesh.rotateY(Math.PI); // Flip so text faces outward
+
+  textGroup.add(charMesh);
+}
+
+// Slightly lift the textGroup if needed (e.g., near equator at y=0)
+textGroup.position.y = 0;
+
+// Attach text group to Mars, so it rotates with the planet
+mars.add(textGroup);
+
+// === ✨ CURVED TEXT WRAPPED AROUND MARS END ===
+
 
 // ORBIT CONTROLS
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
 controls.autoRotate = true;
-controls.autoRotateSpeed = 0.5;
+controls.autoRotateSpeed = 5.0;  
+
 
 // ANIMATE
 function animate() {
@@ -95,5 +145,6 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
 
 

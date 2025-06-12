@@ -1,0 +1,424 @@
+/* === GLOBAL VARIABLES === */
+:root {
+  --primary: #00C7D9;
+  --accent: #003B54;
+  --text: #1A1A1A;
+  --font-heading: 'Orbitron', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* === BASE STYLES === */
+body {
+  background: url('/textures/starfield.jpg') repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  color: white;
+}
+
+
+/* === CANVAS BACKGROUND === */
+#mars-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1000;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* === SECTION STYLING === */
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* === SITE WRAPPER === */
+#site-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+}
+
+/* === HERO SECTION === */
+#hero {
+  background: none;
+  padding: 60px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.planet-content .glow-dome {
+  max-width: 900px; /* wider */
+  padding: 4rem 5rem;
+  background: radial-gradient(circle at center, rgba(0, 0, 50, 0.8), rgba(0, 0, 0, 0.95));
+  box-shadow: 0 0 100px rgba(0, 255, 255, 0.5);
+  border: 2px solid rgba(0, 255, 255, 0.5);
+  border-radius: 2rem;
+  backdrop-filter: blur(16px);
+}
+
+.planet-content h2 {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: #00e0ff;
+  text-shadow: 0 0 15px #00e0ff, 0 0 50px #00e0ff;
+  margin-bottom: 2rem;
+}
+
+.planet-content h2 .neon-text {
+  display: inline-block;
+  font-weight: 700;
+}
+
+.planet-content h2 .neon-glow {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #00ffff;
+  text-shadow: 0 0 25px #00ffff, 0 0 70px #00ffff;
+}
+
+.planet-content p {
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  color: #b3f0ff;
+  line-height: 1.9;
+  margin: 1.2rem auto;
+  max-width: 700px;
+  text-shadow: 0 0 6px rgba(0, 200, 255, 0.5);
+}
+
+@keyframes cometPulse {
+  0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  50% { transform: translateX(-50%) translateY(10px); opacity: 0.7; }
+  100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+/* === TYPOGRAPHY === */
+h1, h2 {
+  font-family: var(--font-heading);
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #e3f8f9;
+  font-size: 1.1rem;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* TECHNOLOGIES SECTION */
+.tech-stack {
+  text-align: center;
+  padding: 60px 0;
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+}
+
+.tech-stack h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: var(--primary);
+  font-family: var(--font-heading);
+}
+
+/* Scroll wrapper */
+.tech-scroll-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Scrolling container */
+.tech-scroll {
+  display: flex;
+  width: fit-content;
+  animation: scrollLeft 40s linear infinite;
+}
+
+/* Row of tech items */
+.tech-grid {
+  display: flex;
+  gap: 40px;
+  padding: 1rem 2rem;
+}
+
+/* Individual tech item */
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.tech-item i,
+.tech-item img {
+  font-size: 60px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.tech-item span {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.tech-item:hover {
+  transform: scale(1.1);
+}
+
+.tech-item:hover .colored-icon,
+.tech-item:hover img {
+  transform: scale(1.1);
+}
+
+.shopify-icon {
+  width: 50px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.colored-icon {
+  width: 60px;
+  height: auto;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Scroll animation */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause scroll on hover */
+.tech-scroll-wrapper:hover .tech-scroll {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* === RESPONSIVE === */
+@media screen and (max-width: 768px) {
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .planet-content {
+    padding: 30px;
+  }
+}
+
+/* === HERO SECTION: UPGRADED === */
+.hero-upgraded {
+  position: relative;
+  z-index: 10;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-upgraded .glow-dome {
+  background: radial-gradient(circle at center, rgba(0, 0, 50, 0.6), rgba(0, 0, 0, 0.9));
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 3rem;
+  max-width: 700px;
+  box-shadow: 0 0 80px rgba(0, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  animation: pulseGlow 5s infinite alternate;
+}
+
+.hero-upgraded .neon-text,
+.hero-upgraded .neon-glow {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00f0ff, 0 0 30px #00f0ff;
+}
+
+.hero-upgraded .neon-glow {
+  font-size: 2.5rem;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 60px rgba(0, 255, 255, 0.2); }
+  100% { box-shadow: 0 0 100px rgba(0, 255, 255, 0.5); }
+}
+
+/* === SERVICES SECTION: UPGRADED ORBIT === */
+.enhanced-orbit {
+  position: relative;
+  z-index: 5;
+  padding: 6rem 2rem;
+  background: none;
+}
+
+
+.enhanced-orbit .orb-container {
+  border: 2px solid rgba(0, 255, 255, 0.2);
+  border-radius: 50%;
+  position: relative;
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  width: 100%;
+  aspect-ratio: 1.8 / 1; /* Wider oval shape */
+  margin: 0 auto;
+  background: transparent; /* Make the background transparent */
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.enhanced-orbit .star-title {
+  font-size: 2.2rem;
+  color: #ffffff;
+  text-shadow: 0 0 10px #00f0ff;
+}
+
+.enhanced-orbit .starfield-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('/assets/starfield.svg');
+  background-size: cover;
+  opacity: 0.3;
+  animation: driftStars 40s linear infinite;
+  pointer-events: none;
+}
+
+/* Add this to your CSS */
+.services-orbit .star-title {
+  font-family: var(--font-heading);
+  font-size: 3rem; /* Bigger */
+  color: #00f0ff;
+  text-shadow: 0 0 12px #00f0ff, 0 0 40px #00f0ff;
+  margin-bottom: 2rem;
+}
+
+/* You can also adjust paragraph colors inside glow dome */
+.services-orbit p {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: #a0eaff;
+  line-height: 1.8;
+  text-shadow: 0 0 4px #00c7d9;
+  max-width: 350px; /* to prevent lines too long */
+  margin: 0 auto 1.5rem auto;
+}
+
+/* Optional: Add a similar glow effect on headings */
+.services-orbit h3 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: #00d9ff;
+  text-shadow: 0 0 10px #00d9ff;
+  margin-bottom: 0.3rem;
+}
+
+
+@keyframes driftStars {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 1000px; }
+}
+
+.enhanced-orbit .orbit-ring {
+  width: 720px;   /* Slightly larger than orb-container */
+  height: 420px;
+  border-radius: 50% / 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+  border: 2px dashed rgba(0, 255, 255, 0.2);
+  animation: spinRing 30s linear infinite;
+  position: absolute;
+  z-index: 0;
+}
+
+.orbit-item {
+  max-width: 240px;
+  padding: 1rem;
+  text-align: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  color: white;
+  word-wrap: break-word;
+}
+
+.orbit-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.orbit-item p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+
+@keyframes spinRing {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+
+
+
+
+
+

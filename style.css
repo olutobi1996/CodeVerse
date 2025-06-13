@@ -46,7 +46,76 @@ section {
   overflow-x: hidden;
 }
 
-/* === HERO SECTION === */
+/* === HERO SECTION: UPGRADED === */
+.hero-upgraded {
+  position: relative;
+  z-index: 10;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Glow Dome */
+.planet-content.hero-upgraded .glow-dome {
+  position: relative;
+  max-width: 800px;
+  width: 95%;
+  padding: 2rem;
+  height: auto;
+  background: radial-gradient(circle at center, rgba(0, 0, 50, 0.7), rgba(0, 0, 0, 0.9));
+  box-shadow: 0 0 90px rgba(0, 255, 255, 0.4);
+  border: 2px solid rgba(0, 255, 255, 0.4);
+  border-radius: 50% / 35%;
+  backdrop-filter: blur(14px);
+  margin: 0 auto;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: pulseGlow 5s infinite alternate;
+}
+
+/* Heading Styles */
+.planet-content h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: #00e0ff;
+  text-shadow: 0 0 15px #00e0ff, 0 0 50px #00e0ff;
+  margin-bottom: 2rem;
+}
+
+.planet-content h2 .neon-text,
+.hero-upgraded .neon-text {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00f0ff, 0 0 30px #00f0ff;
+}
+
+.planet-content h2 .neon-glow,
+.hero-upgraded .neon-glow {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #00ffff;
+  text-shadow: 0 0 25px #00ffff, 0 0 70px #00ffff;
+}
+
+/* Paragraphs */
+.planet-content p {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  color: #b3f0ff;
+  line-height: 1.5;
+  margin: 0.6rem auto;
+  max-width: 700px;
+  text-shadow: 0 0 6px rgba(0, 200, 255, 0.5);
+}
+
+/* Hero Section Container */
 #hero {
   background: none;
   padding: 60px;
@@ -55,45 +124,13 @@ section {
   z-index: 1;
 }
 
-.planet-content .glow-dome {
-  max-width: 900px; /* wider */
-  padding: 4rem 5rem;
-  background: radial-gradient(circle at center, rgba(0, 0, 50, 0.8), rgba(0, 0, 0, 0.95));
-  box-shadow: 0 0 100px rgba(0, 255, 255, 0.5);
-  border: 2px solid rgba(0, 255, 255, 0.5);
-  border-radius: 2rem;
-  backdrop-filter: blur(16px);
+/* Animation */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 60px rgba(0, 255, 255, 0.2); }
+  100% { box-shadow: 0 0 100px rgba(0, 255, 255, 0.5); }
 }
 
-.planet-content h2 {
-  font-family: var(--font-heading);
-  font-size: 3rem;
-  color: #00e0ff;
-  text-shadow: 0 0 15px #00e0ff, 0 0 50px #00e0ff;
-  margin-bottom: 2rem;
-}
 
-.planet-content h2 .neon-text {
-  display: inline-block;
-  font-weight: 700;
-}
-
-.planet-content h2 .neon-glow {
-  font-size: 3.5rem;
-  font-weight: 900;
-  color: #00ffff;
-  text-shadow: 0 0 25px #00ffff, 0 0 70px #00ffff;
-}
-
-.planet-content p {
-  font-family: var(--font-body);
-  font-size: 1.3rem;
-  color: #b3f0ff;
-  line-height: 1.9;
-  margin: 1.2rem auto;
-  max-width: 700px;
-  text-shadow: 0 0 6px rgba(0, 200, 255, 0.5);
-}
 
 @keyframes cometPulse {
   0% { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -129,73 +166,73 @@ p {
   }
 }
 
-/* TECHNOLOGIES SECTION */
+/* === Technology Scroll === */
 .tech-stack {
   text-align: center;
   padding: 60px 0;
-  background: transparent;
   overflow: hidden;
-  position: relative;
+  background: transparent;
 }
 
 .tech-stack h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 40px;
-  color: var(--primary);
+  color: #00f0ff;
   font-family: var(--font-heading);
+  text-shadow: 0 0 15px #00f0ff, 0 0 40px #00f0ff;
 }
 
-/* Scroll wrapper */
 .tech-scroll-wrapper {
   overflow: hidden;
   width: 100%;
-  position: relative;
 }
 
-/* Scrolling container */
 .tech-scroll {
   display: flex;
-  width: fit-content;
+  flex-wrap: nowrap;
   animation: scrollLeft 40s linear infinite;
+  width: max-content;
 }
 
-/* Row of tech items */
 .tech-grid {
   display: flex;
   gap: 40px;
   padding: 1rem 2rem;
+  flex-wrap: nowrap;
 }
 
-/* Individual tech item */
 .tech-item {
+  flex: 0 0 auto;
+  width: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
-  flex-shrink: 0;
   transition: transform 0.3s ease;
-}
-
-.tech-item i,
-.tech-item img {
-  font-size: 60px;
-  margin-bottom: 10px;
-  transition: transform 0.3s ease;
-}
-
-.tech-item span {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  color: var(--accent);
 }
 
 .tech-item:hover {
   transform: scale(1.1);
 }
 
-.tech-item:hover .colored-icon,
-.tech-item:hover img {
-  transform: scale(1.1);
+.tech-item i,
+.tech-item img {
+  font-size: 60px;
+  margin-bottom: 10px;
+  filter: none !important;
+  opacity: 1 !important;
+  /* REMOVE the next line to allow Devicon's default coloring */
+  /* color: inherit !important; */
+  background: none !important;
+  box-shadow: none !important;
+}
+
+
+
+.tech-item span {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: #a0eaff;
+  text-shadow: 0 0 6px #00c7d9;
 }
 
 .shopify-icon {
@@ -205,23 +242,10 @@ p {
   margin-bottom: 10px;
 }
 
-.colored-icon {
-  width: 60px;
-  height: auto;
-  background-color: #fff;
-  padding: 5px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-/* Scroll animation */
+/* Keyframes for infinite scroll */
 @keyframes scrollLeft {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* Pause scroll on hover */
@@ -229,14 +253,7 @@ p {
   animation-play-state: paused;
 }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
+
 
 /* === RESPONSIVE === */
 @media screen and (max-width: 768px) {
@@ -253,45 +270,6 @@ p {
   }
 }
 
-/* === HERO SECTION: UPGRADED === */
-.hero-upgraded {
-  position: relative;
-  z-index: 10;
-  padding: 4rem 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.hero-upgraded .glow-dome {
-  background: radial-gradient(circle at center, rgba(0, 0, 50, 0.6), rgba(0, 0, 0, 0.9));
-  border: 2px solid rgba(0, 255, 255, 0.3);
-  border-radius: 50%;
-  padding: 3rem;
-  max-width: 700px;
-  box-shadow: 0 0 80px rgba(0, 255, 255, 0.3);
-  backdrop-filter: blur(12px);
-  animation: pulseGlow 5s infinite alternate;
-}
-
-.hero-upgraded .neon-text,
-.hero-upgraded .neon-glow {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  color: #00f0ff;
-  text-shadow: 0 0 10px #00f0ff, 0 0 30px #00f0ff;
-}
-
-.hero-upgraded .neon-glow {
-  font-size: 2.5rem;
-}
-
-@keyframes pulseGlow {
-  0% { box-shadow: 0 0 60px rgba(0, 255, 255, 0.2); }
-  100% { box-shadow: 0 0 100px rgba(0, 255, 255, 0.5); }
-}
-
 /* === SERVICES SECTION: UPGRADED ORBIT === */
 .enhanced-orbit {
   position: relative;
@@ -300,23 +278,21 @@ p {
   background: none;
 }
 
-
 .enhanced-orbit .orb-container {
-  border: 2px solid rgba(0, 255, 255, 0.2);
-  border-radius: 50%;
-  position: relative;
-  padding: 4rem 2rem;
-  max-width: 1000px;
-  width: 100%;
-  aspect-ratio: 1.8 / 1; /* Wider oval shape */
+  /* REMOVE or comment out these lines: */
+  /* border: 2px solid rgba(0, 255, 255, 0.2); */
+  /* border-radius: 50% / 40%; */
+  /* box-shadow: 0 0 40px rgba(0, 255, 255, 0.2); */
+  /* backdrop-filter: blur(10px); */
+  /* padding: 4rem 2rem; */
   margin: 0 auto;
-  background: transparent; /* Make the background transparent */
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  background: transparent;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  gap: 2rem;
+  max-width: 1100px;
+  width: 100%;
 }
 
 
@@ -327,25 +303,20 @@ p {
 }
 
 .enhanced-orbit .starfield-overlay::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url('/assets/starfield.svg');
-  background-size: cover;
-  opacity: 0.3;
-  animation: driftStars 40s linear infinite;
-  pointer-events: none;
+  display: none !important;
 }
 
 /* Add this to your CSS */
 .services-orbit .star-title {
   font-family: var(--font-heading);
-  font-size: 3rem; /* Bigger */
-  color: #00f0ff;
-  text-shadow: 0 0 12px #00f0ff, 0 0 40px #00f0ff;
-  margin-bottom: 2rem;
+  font-size: 3rem;
+  font-weight: 900;
+  color: #00ffff;
+  text-shadow: 0 0 25px #00ffff, 0 0 70px #00ffff;
+  margin-bottom: 3rem;
+  display: inline-block;
 }
+
 
 /* You can also adjust paragraph colors inside glow dome */
 .services-orbit p {
@@ -374,46 +345,51 @@ p {
 }
 
 .enhanced-orbit .orbit-ring {
-  width: 720px;   /* Slightly larger than orb-container */
-  height: 420px;
-  border-radius: 50% / 70%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-  border: 2px dashed rgba(0, 255, 255, 0.2);
-  animation: spinRing 30s linear infinite;
-  position: absolute;
-  z-index: 0;
+  display: none !important;
 }
 
 .orbit-item {
-  max-width: 240px;
-  padding: 1rem;
+  flex: 1 1 200px;       /* flexible width, min 200px */
+  max-width: 250px;      /* max width per item */
+  padding: 1.5rem;
+  background: rgba(0, 255, 255, 0.05);
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
   text-align: center;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  color: white;
-  word-wrap: break-word;
+  color: #b3f0ff;
+}
+
+
+.orbit-grid {
+  display: flex;          /* change from grid to flex */
+  flex-direction: row;    /* horizontal layout */
+  justify-content: center;
+  gap: 2rem;             /* space between items */
+  flex-wrap: wrap;      /* no wrapping, keep in single line */
+  width: 100%;
+  max-width: 1100px;     /* or your preferred max width */
+  margin: 0 auto;
 }
 
 .orbit-item h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 2rem;      /* bigger font */
+  font-weight: 900;     /* bolder */
+  color: #00ffff;
+  text-shadow: 0 0 25px #00ffff, 0 0 70px #00ffff;
+  margin-bottom: 0.6rem;
 }
 
 .orbit-item p {
-  font-size: 0.95rem;
-  line-height: 1.4;
+  font-family: var(--font-body);
+  font-size: 1.5rem;    /* bigger, clearer */
+  color: #b3f0ff;
+  line-height: 1.5;
+  text-shadow: 0 0 6px rgba(0, 200, 255, 0.5);
+  max-width: 250px;
+  margin: 0 auto;
 }
 
-
-@keyframes spinRing {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
 
 
 

@@ -30,6 +30,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <script type="module" src="script.js"></script>
+  <!-- AOS Library -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 </head>
 
 <body>
@@ -57,7 +61,7 @@
   </section>
 
 
-  <div class="orb-container">
+  <div class="orb-container" data-aos="fade-up">
     <h2><span class="star-title">Explore Our Universe of Services</span></h2>
 
     <div class="orbit-grid">
@@ -80,7 +84,88 @@
     </div>
   </div>
 
-  <section class="tech-stack" id="tech-stack">
+  <section class="case-studies-section">
+    <h2 class="section-title">🚀 Featured Missions</h2>
+
+    <!-- Project 1: Maintenance Company -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="screenshot-frame">
+        <div class="browser-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <video autoplay loop muted playsinline>
+          <source src="assets/maintenance-demo.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-details">
+        <h3>🔧 Cambridge Maintenance Co.</h3>
+        <p><strong>Mission:</strong> Build a premium, professional website for a local maintenance brand.</p>
+        <p><strong>Solution:</strong> Custom site with contact forms, testimonials, gallery, SEO, and a fresh logo
+          identity. Includes showcase of 10 services.</p>
+        <div class="tech-used">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://eco-fitness-2b6c5d715c47.herokuapp.com/" class="project-link" target="_blank">🌍 Visit Live</a>
+      </div>
+    </div>
+
+    <!-- Project 2: EcoFitness E-commerce -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="screenshot-frame">
+        <div class="browser-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <video autoplay loop muted playsinline>
+          <source src="assets/ecofitness-demo.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-details">
+        <h3>🌱 EcoFitness Marketplace</h3>
+        <p><strong>Mission:</strong> Launch a sustainable e-commerce platform for eco-conscious fitness products.</p>
+        <p><strong>Solution:</strong> Full-stack platform with Stripe checkout, SEO, blog, email marketing, reviews, and
+          a growing eco-community hub.</p>
+        <div class="tech-used">
+          <i class="devicon-react-original colored"></i>
+          <i class="devicon-nodejs-plain colored"></i>
+          <i class="devicon-mongodb-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="#" class="project-link" target="_blank">🌐 Visit Live</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews-section" id="reviews">
+    <h2 class="section-title">✨ Trusted Across the Galaxy</h2>
+    <div class="review-stars-bg"></div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <p>“CodeVerse Changed our brand into a proffesional outfit. Fast, sleek, and beyond expectations.”</p>
+        <span>— Sarah, Starborn Studio 🌌</span>
+      </div>
+      <div class="review-card">
+        <p>“Best investment ever. Our site is stunning and functional. Clients love it.”</p>
+        <span>— Joe, Cambridge Maintenance 🚀</span>
+      </div>
+      <div class="review-card">
+        <p>“From design to deployment — flawless experience. They get the vision.”</p>
+        <span>— Ava, EcoFitness 🌿</span>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="tech-stack" id="tech-stack" data-aos="fade-up">
     <h2>Technologies We Use</h2>
     <div class="tech-scroll-wrapper">
       <div class="tech-scroll">
@@ -137,12 +222,27 @@
     </div>
   </section>
 
+  <section class="contact-section" id="contact">
+    <h2 class="section-title">📬 Connect with CodeVerse HQ</h2>
+    <p>Ready to launch your next project? Drop us a message from anywhere in the universe.</p>
+
+    <form class="contact-form" action="mailto:your@email.com" method="POST" enctype="text/plain">
+      <input type="text" name="name" placeholder="🚀 Your Name" required />
+      <input type="email" name="email" placeholder="📡 Your Email" required />
+      <textarea name="message" placeholder="🌌 Your Message" rows="5" required></textarea>
+      <button type="submit">Send Transmission</button>
+    </form>
+  </section>
 
 
   <footer class="footer">
     <p>© 2025 CodeVerse by Tobi. All rights reserved.</p>
   </footer>
-
+  <script> AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true
+    });</script>
 </body>
 
 </html>

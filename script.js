@@ -2,132 +2,148 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js';
 
-// === SCROLL ANIMATION ===
-gsap.utils.toArray(".reveal").forEach(section => {
-  gsap.fromTo(section, {
-    y: 50,
-    opacity: 0
-  }, {
-    y: 0,
-    opacity: 1,
-    duration: 1.2,
-    scrollTrigger: {
-      trigger: section,
-      start: "top 80%",
-      toggleActions: "play none none reverse"
-    }
-  });
-});
-
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.reveal').forEach(el => {
-    const windowHeight = window.innerHeight;
-    const elementTop = el.getBoundingClientRect().top;
-    if (elementTop < windowHeight - 150) {
-      el.classList.add('active');
-    } else {
-      el.classList.remove('active');
-    }
-  });
-});
-
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('revealed');
-    }
-  });
-}, {
-  threshold: 0.1
-});
-reveals.forEach(reveal => observer.observe(reveal));
-
-// === THREE.JS MARS SCENE ===
-const marsCanvas = document.getElementById('mars-canvas');
+// === SCENE SETUP ===
+const venusCanvas = document.getElementById('mars-canvas'); // keep ID for now
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 4;
+camera.position.set(0, 0, 4);
 
 const renderer = new THREE.WebGLRenderer({
-  canvas: marsCanvas,
+  canvas: venusCanvas,
   antialias: true,
+  alpha: true
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-// LIGHTING
-scene.add(new THREE.AmbientLight(0xffffff, 0.2));
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+// === LIGHTING ===
+scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 2, 5);
 scene.add(directionalLight);
 
-// TEXTURES
+const pointLight = new THREE.PointLight(0xffccaa, 1.2, 10);
+pointLight.position.set(-2, 1, 3);
+scene.add(pointLight);
+
+// === TEXTURES ===
 const loader = new THREE.TextureLoader();
-const marsTexture = loader.load('./textures/mars_texture.jpg');
-const marsNormal = loader.load('./textures/mars_normal.jpg');
+const venusTexture = loader.load('./textures/8k_venus_surface.jpg');
 const starfield = loader.load('./textures/starfield.jpg');
 scene.background = starfield;
 
-// MARS SPHERE
-const marsMaterial = new THREE.MeshStandardMaterial({
-  map: marsTexture,
-  normalMap: marsNormal,
-  transparent: true,
+// === VENUS PLANET ===
+const venusMaterial = new THREE.MeshStandardMaterial({
+  map: venusTexture,
+  roughness: 1,
+  metalness: 0.1,
+  emissive: new THREE.Color(0x111111),
+  emissiveIntensity: 0.25
 });
-const mars = new THREE.Mesh(new THREE.SphereGeometry(1.2, 64, 64), marsMaterial);
-scene.add(mars);
 
-// CURVED TEXT
-const displayText = ' CodeVerse To Welcome ';
-const charCount = displayText.length;
-const radius = 1.22;
-const charWidth = 0.15;
-const charHeight = 0.3;
-const textGroup = new THREE.Group();
+const venus = new THREE.Mesh(
+  new THREE.SphereGeometry(1.2, 128, 128),
+  venusMaterial
+);
 
-function createCharTexture(char) {
+// === GROUP FOR PLANET & LABELS ===
+const planetGroup = new THREE.Group();
+planetGroup.add(venus);
+scene.add(planetGroup);
+
+// === ORBITING TEXT: "Welcome to CodeVerse" ===
+const orbitText = 'Welcome to CodeVerse';
+const charCount = orbitText.length;
+const orbitRadius = 1.22;
+const charWidth = 0.16;
+const charHeight = 0.32;
+const orbitGroup = new THREE.Group();
+
+function createStyledCharTexture(char) {
   const canvas = document.createElement('canvas');
-  canvas.width = 128;
+  canvas.width = 256;
   canvas.height = 256;
-  const context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillStyle = '#ffffff';
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-  context.shadowColor = 'black';
-  context.shadowBlur = 8;
-  context.font = 'bold 160px Orbitron, sans-serif';
-  context.fillText(char, canvas.width / 2, canvas.height / 2);
-  const texture = new THREE.CanvasTexture(canvas);
-  return texture;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = 'rgba(0,0,0,0)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = 'white';
+  ctx.shadowColor = 'black';
+  ctx.shadowBlur = 10;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = 'bold 160px Orbitron, sans-serif';
+  ctx.fillText(char, canvas.width / 2, canvas.height / 2);
+
+  return new THREE.CanvasTexture(canvas);
 }
 
 for (let i = 0; i < charCount; i++) {
-  const char = displayText[i];
+  const char = orbitText[i];
   if (char === ' ') continue;
-  const charTexture = createCharTexture(char);
-  const charMaterial = new THREE.MeshBasicMaterial({ map: charTexture, transparent: true });
-  const charGeometry = new THREE.PlaneGeometry(charWidth, charHeight);
-  const charMesh = new THREE.Mesh(charGeometry, charMaterial);
-  const angle = (i / charCount) * Math.PI * 2;
-  charMesh.position.x = radius * Math.sin(angle);
-  charMesh.position.y = 0;
-  charMesh.position.z = radius * Math.cos(angle);
-  charMesh.lookAt(new THREE.Vector3(0, 0, 0));
-  charMesh.rotateY(Math.PI);
-  textGroup.add(charMesh);
-}
-textGroup.position.y = 0;
-mars.add(textGroup);
 
-// CONTROLS
+  const texture = createStyledCharTexture(char);
+  const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(charWidth, charHeight), material);
+
+  const angle = (i / charCount) * Math.PI * 2;
+  mesh.position.set(
+    orbitRadius * Math.sin(angle),
+    0,
+    orbitRadius * Math.cos(angle)
+  );
+  mesh.lookAt(0, 0, 0);
+  mesh.rotateY(Math.PI);
+  orbitGroup.add(mesh);
+}
+
+orbitGroup.position.y = 0;
+venus.add(orbitGroup);
+
+// === VENUS EXPRESS BANNER ===
+const bannerCanvas = document.createElement('canvas');
+bannerCanvas.width = 1024;
+bannerCanvas.height = 512;
+const bannerCtx = bannerCanvas.getContext('2d');
+
+bannerCtx.fillStyle = 'rgba(0,0,0,0)';
+bannerCtx.fillRect(0, 0, bannerCanvas.width, bannerCanvas.height);
+
+bannerCtx.fillStyle = 'white';
+bannerCtx.shadowColor = 'black';
+bannerCtx.shadowBlur = 10;
+bannerCtx.font = 'bold 70px Orbitron, sans-serif';
+bannerCtx.textAlign = 'center';
+bannerCtx.textBaseline = 'middle';
+bannerCtx.fillText('Venus Express', bannerCanvas.width / 2, bannerCanvas.height / 2);
+
+const textTexture = new THREE.CanvasTexture(bannerCanvas);
+textTexture.minFilter = THREE.LinearFilter;
+textTexture.magFilter = THREE.LinearFilter;
+textTexture.anisotropy = 16;
+
+const textMaterial = new THREE.MeshBasicMaterial({
+  map: textTexture,
+  transparent: true,
+  depthWrite: false
+});
+
+const textPlane = new THREE.Mesh(
+  new THREE.PlaneGeometry(3, 1.5),
+  textMaterial
+);
+textPlane.position.set(0, 1.8, 3);
+scene.add(textPlane); // or planetGroup.add(textPlane) if you want it to follow planet
+
+// === CONTROLS ===
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
 controls.autoRotate = true;
-controls.autoRotateSpeed = 5.0;
+controls.autoRotateSpeed = 3.0;
 
-// RENDER LOOP
+// === ANIMATION LOOP ===
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
@@ -135,86 +151,13 @@ function animate() {
 }
 animate();
 
+// === HANDLE RESIZE ===
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// FADE MARS ON SCROLL
-const fadeDuration = 600;
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  if (scrollY <= 0) {
-    mars.visible = true;
-    controls.autoRotate = true;
-    mars.material.opacity = 1;
-  } else if (scrollY > 0 && scrollY < fadeDuration) {
-    mars.visible = true;
-    controls.autoRotate = true;
-    mars.material.opacity = 1 - scrollY / fadeDuration;
-  } else {
-    mars.visible = false;
-    controls.autoRotate = false;
-  }
-});
-
-// === ✨ PARTICLE STARS BACKGROUND AROUND ORBIT ===
-const orbitCanvas = document.getElementById("orbitParticles");
-const ctx = orbitCanvas.getContext("2d");
-orbitCanvas.width = window.innerWidth;
-orbitCanvas.height = window.innerHeight;
-
-let stars = Array.from({ length: 150 }).map(() => ({
-  x: Math.random() * orbitCanvas.width,
-  y: Math.random() * orbitCanvas.height,
-  r: Math.random() * 2,
-  d: Math.random() * 1.5 + 0.5
-}));
-
-function drawStars() {
-  ctx.clearRect(0, 0, orbitCanvas.width, orbitCanvas.height);
-  stars.forEach(s => {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-    ctx.fill();
-  });
-  moveStars();
-}
-
-function moveStars() {
-  stars.forEach(s => {
-    s.y += s.d;
-    if (s.y > orbitCanvas.height) {
-      s.y = 0;
-      s.x = Math.random() * orbitCanvas.width;
-    }
-  });
-  requestAnimationFrame(drawStars);
-}
-drawStars();
-
-window.addEventListener("resize", () => {
-  orbitCanvas.width = window.innerWidth;
-  orbitCanvas.height = window.innerHeight;
-});
-
-// === 🎧 AUDIO TOGGLE ===
-const audio = document.getElementById("space-audio");
-const button = document.getElementById("audio-toggle");
-
-if (audio && button) {
-  button.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      button.textContent = "🔇 Pause Space Ambience";
-    } else {
-      audio.pause();
-      button.textContent = "🔊 Play Space Ambience";
-    }
-  });
-}
 
 
 

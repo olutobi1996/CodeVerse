@@ -968,6 +968,30 @@ p {
   margin-right: auto;
 }
 
+/* Remove bullet points from all ul.highlight-points */
+ul.highlight-points {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Apply neon style to h3s inside .why-codeverse-glow */
+.why-codeverse-glow h3,
+.glow-dome.why-codeverse-glow h2 {
+  font-size: 2rem;
+  font-family: 'Orbitron', sans-serif; /* or whatever you're using */
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
+/* Optional: Make all neon headings share same class */
+.neon-text {
+  font-size: 2rem;
+  font-family: 'Orbitron', sans-serif;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
 .highlight-points li {
   margin-bottom: 1.2rem;
   font-size: 1.2rem;
@@ -978,18 +1002,6 @@ p {
   color: #e0f7fa;
   line-height: 1.6;
   letter-spacing: 0.5px;
-}
-
-.highlight-points li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 10px;
-  width: 10px;
-  height: 10px;
-  background: #00ffe7;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #00ffe7;
 }
 
 .price-tag {
@@ -1006,6 +1018,7 @@ p {
   padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
   font-weight: 600;
+  font-family: 'Orbitron', sans-serif;
   border: 1px solid #00ffe7;
   border-radius: 20px;
   color: #00ffe7;
@@ -1061,6 +1074,7 @@ p {
   color: #000;
   box-shadow: 0 0 20px #00ffe7;
 }
+
 
 @keyframes pulse {
   0% {

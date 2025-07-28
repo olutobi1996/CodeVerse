@@ -593,11 +593,22 @@ p {
 
 
 /* Projects created */
-.featured-projects {
-  background: radial-gradient(ellipse at top, #0d0d2b, #000);
-  padding: 6rem 2rem;
-  color: #f5f5f5;
-  text-align: center;
+.loom-wrapper {
+  position: relative;
+  padding-top: 56.25%;
+  /* 16:9 Aspect Ratio */
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.loom-video {
+  position: absolute;
+  top: -30px;
+  /* Push video up slightly to hide Loom browser bar */
+  left: 0;
+  width: 100%;
+  height: calc(100% + 30px);
+  border: none;
 }
 
 .section-title {
@@ -614,26 +625,30 @@ p {
   align-items: center;
 }
 
-.project-card {
-  background: rgba(20, 20, 40, 0.7);
-  border: 1px solid rgba(0, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
-  max-width: 900px;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.case-studies-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
 }
 
-.screenshot-frame {
-  width: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-  border: 2px solid #00fff7;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+
+
+@media (min-width: 768px) {
+  .project-card {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3rem;
+  }
 }
+
+
+.project-details {
+  flex: 1;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+}
+
 
 .browser-bar {
   display: flex;
@@ -676,13 +691,28 @@ p {
   font-size: 1.8rem;
 }
 
-/* Projects Done */
+/* 🎯 General Layout Cleanup */
 .case-studies-section {
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 4rem 1rem;
   color: var(--primary-text);
   font-family: 'Inter', sans-serif;
-  max-width: 1400px;
-  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #00fff7;
+  text-shadow: 0 0 10px #00fff7;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.project-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
 }
 
 .project-card {
@@ -699,10 +729,11 @@ p {
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.05);
 }
 
+/* 🎥 Video Styling */
 .screenshot-frame {
   max-width: 550px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background: #111;
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
@@ -715,50 +746,33 @@ p {
   height: auto;
   object-fit: cover;
   border: none;
+  border-radius: 12px;
 }
 
-.browser-bar {
-  background: #1e1e1e;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  padding-left: 12px;
-  gap: 6px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.red {
-  background: #ff5f57;
-}
-
-.yellow {
-  background: #ffbd2e;
-}
-
-.green {
-  background: #28c840;
-}
-
+/* 📄 Project Details */
 .project-details {
   flex: 1;
   min-width: 280px;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
 }
 
 .project-details h3 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: var(--accent);
   margin-bottom: 0.5rem;
 }
 
 .project-details p {
   margin: 0.5rem 0;
-  line-height: 1.5;
+  line-height: 1.6;
+}
+
+.tech-used {
+  margin-top: 1rem;
+  font-size: 1.8rem;
 }
 
 .project-link {
@@ -772,6 +786,7 @@ p {
   text-shadow: 0 0 8px #0ff;
 }
 
+/* 📱 Mobile Responsiveness */
 @media screen and (max-width: 768px) {
   .project-card {
     flex-direction: column;
@@ -979,7 +994,8 @@ ul.highlight-points {
 .why-codeverse-glow h3,
 .glow-dome.why-codeverse-glow h2 {
   font-size: 2rem;
-  font-family: 'Orbitron', sans-serif; /* or whatever you're using */
+  font-family: 'Orbitron', sans-serif;
+  /* or whatever you're using */
   color: #0ff;
   text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
 }

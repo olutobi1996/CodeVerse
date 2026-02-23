@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transmission Received | CodeVerse</title>
+
+  <!-- Auto Redirect Back Home After 5 Seconds -->
+  <meta http-equiv="refresh" content="5;url=/" />
+
+  <!-- Import Map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js",
+        "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/"
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter&display=swap" rel="stylesheet" />
+
+  <!-- Your Main Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- AOS (optional but keeps consistency) -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- Your existing script -->
+  <script type="module" src="script.js"></script>
+
+</head>
+
+<body>
+
+  <!-- Planet Background -->
+  <section id="planet-intro">
+    <canvas id="mars-canvas"></canvas>
+  </section>
+  <canvas id="orbitParticles"></canvas>
+
+  <!-- Glow Dome Content -->
+  <section class="planet-content hero-upgraded">
+    <div class="stellar-panel">
+      <div class="glow-dome" data-aos="zoom-in">
+
+        <h2>
+          <span class="neon-text">📡 Transmission Received.</span><br />
+          <span class="neon-glow">🚀 Preparing Response Sequence...</span>
+        </h2>
+
+        <p>
+          Thank you for reaching out to <strong>CodeVerse</strong>.
+          Your message has successfully entered our digital orbit.
+        </p>
+
+        <p>
+          Our team will respond shortly. Until then, prepare for launch.
+        </p>
+
+        <p>
+          Redirecting to home base in 5 seconds...
+        </p>
+
+        <br>
+
+        <a href="/" class="hero-button">
+          🛸 Return to Homepage Now
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    AOS.init();
+  </script>
+
+</body>
+</html>

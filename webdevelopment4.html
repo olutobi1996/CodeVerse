@@ -330,12 +330,27 @@
         <h2 class="section-title">📬 Connect with CodeVerse HQ</h2>
         <p>Ready to launch your next project? Drop us a message from anywhere in the universe.</p>
 
-        <form class="footer-contact-form" action="mailto:your@email.com" method="POST" enctype="text/plain">
-          <input type="text" name="name" placeholder="🚀 Your Name" required />
-          <input type="email" name="email" placeholder="📡 Your Email" required />
-          <textarea name="message" placeholder="🌌 Your Message" rows="5" required></textarea>
-          <button type="submit">Send Transmission</button>
-        </form>
+           <form class="footer-contact-form"
+      name="footer-contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/thank-you">
+
+  <!-- Required hidden input for Netlify -->
+  <input type="hidden" name="form-name" value="footer-contact" />
+
+  <!-- Honeypot spam field (hidden automatically) -->
+  <p style="display:none;">
+    <label>Don’t fill this out: <input name="bot-field" /></label>
+  </p>
+
+  <input type="text" name="name" placeholder="🚀 Your Name" required />
+  <input type="email" name="email" placeholder="📡 Your Email" required />
+  <textarea name="message" placeholder="🌌 Your Message" rows="5" required></textarea>
+
+  <button type="submit">Send Transmission</button>
+</form>
 
         <div class="footer-bottom">
           <div class="social-links">

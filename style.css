@@ -161,7 +161,6 @@ section {
   height: auto;
   overflow-x: hidden;
 }
-
 /* === HERO SECTION: UPGRADED === */
 .hero-upgraded {
   position: relative;
@@ -188,13 +187,48 @@ section {
   max-width: 900px;
   width: 90%;
   padding: 2.5rem;
-  background: linear-gradient(135deg, rgba(0, 20, 50, 0.6), rgba(0, 0, 0, 0.9));
-  border: 2px solid rgba(0, 255, 255, 0.25);
-  box-shadow: 0 0 60px rgba(0, 255, 255, 0.2);
   border-radius: 2rem;
-  backdrop-filter: blur(12px);
   text-align: center;
-  animation: pulseGlow 5s ease-in-out infinite alternate;
+  position: relative;
+  overflow: hidden;
+
+  /* GLASS EFFECT */
+  background: rgba(0, 20, 50, 0.35); /* more transparent */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* BORDER + DEPTH */
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 0 10px rgba(0, 255, 255, 0.1);
+
+  /* subtle floating */
+  transition: all 0.4s ease;
+}
+
+.stellar-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+/* Hover = more depth */
+.stellar-panel:hover {
+  transform: translateY(-10px) scale(1.01);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    inset 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
 .stellar-panel h2 {
@@ -1143,4 +1177,120 @@ ul.highlight-points {
   100% {
     box-shadow: 0 0 8px rgba(0, 255, 231, 0.4);
   }
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+/* Each card */
+.card {
+    position: relative;
+    width: 300px;
+    min-height: 450px; /* taller for bigger logo and spacing */
+    background: #232323;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: 0.5s;
+    padding-top: 100px; /* more space for bigger logo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Logo in background */
+.card:before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 160px;  /* bigger logo */
+    height: 160px;
+    background: url('/assets/CodeVerse1.png') no-repeat center/contain;
+    opacity: 0.15;
+    transform: translateX(-50%);
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.card:hover:before {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.25;
+}
+
+/* Content inside card */
+.card .contentBx {
+    position: relative;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
+
+/* Heading */
+.card .contentBx h3 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--primary);
+    text-shadow: 0 0 10px #00fff7, 0 0 25px #00fff7;
+    margin-bottom: 1rem; /* more spacing below heading */
+}
+
+/* Paragraph */
+.card .contentBx p {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    color: #b3f0ff;
+    line-height: 1.5;
+    text-shadow: 0 0 6px rgba(0, 200, 255, 0.3);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s, max-height 0.5s ease;
+    margin-bottom: 1rem;
+}
+
+.card:hover .contentBx p {
+    opacity: 1;
+    max-height: 500px;
+}
+
+/* Button styling */
+.card .contentBx a {
+    margin-top: auto; /* pushes button to bottom */
+    padding: 0.8rem 2rem;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    border: 2px solid var(--primary);
+    border-radius: 1rem;
+    text-shadow: 0 0 5px #00fff7;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.card .contentBx a:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow:
+        0 0 25px #00fff7,
+        0 0 50px #00fff7,
+        0 0 80px #00fff7;
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .card {
+        width: 90%;
+        min-height: 450px;
+    }
 }

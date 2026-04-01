@@ -41,6 +41,44 @@
   </section>
   <canvas id="orbitParticles"></canvas>
 
+    <script id="vertex-shader-map" type="x-shader/x-vertex">
+uniform sampler2D u_map_tex;
+uniform float u_dot_size;
+
+varying float vOpacity;
+varying vec2 vUv;
+
+void main() {
+    vUv = uv;
+
+    float visibility = step(.2, texture2D(u_map_tex, uv).r);
+    gl_PointSize = visibility * u_dot_size;
+
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    vOpacity = (1. / length(mvPosition.xyz) - .7);
+    vOpacity = clamp(vOpacity, .03, 1.);
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+</script>
+
+<script id="fragment-shader-map" type="x-shader/x-fragment">
+uniform sampler2D u_map_tex;
+
+varying float vOpacity;
+varying vec2 vUv;
+
+void main() {
+    vec3 color = texture2D(u_map_tex, vUv).rgb * 5.5; // brightens the Earth
+    float dot = 1. - smoothstep(.38, .4, length(gl_PointCoord.xy - vec2(.5)));
+    if (dot < 0.5) discard;
+    gl_FragColor = vec4(color, dot * vOpacity);
+}
+</script>
+
+<div class="welcome-header">
+  <h1>🌐 Welcome to CodeVerse</h1>
+</div>
 
   <section class="page-hero">
     <h1>🛰️ UX/UI Design & Branding</h1>
@@ -114,7 +152,7 @@
   </section>
 
   <!-- Featured Missions -->
-      <section class="case-studies-section">
+       <section class="case-studies-section">
   <h2 class="section-title">🚀 Featured Missions</h2>
 
   <!-- Project 1: Premium Serviced Offices in Ayr -->
@@ -226,6 +264,28 @@
     </div>
   </div>
 
+  <!-- Project 10: Wilko Physio – Manchester Private Physio -->
+<div class="project-card" data-aos="fade-up">
+  <div class="screenshot-frame">
+    <video autoplay loop muted playsinline controls class="project-video">
+      <source src="assets/wilkophysio.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="project-details">
+    <h3>🩺 Wilko Physio – Manchester Private Physio</h3>
+    <p><strong>Mission:</strong> Provide expert physiotherapy services in Manchester, including 1-on-1 treatment, group sessions, and advanced MRI diagnostics.</p>
+    <p><strong>Solution:</strong> Clean, professional site showcasing treatments, MRI scan availability, patient testimonials, easy booking forms, and clear service descriptions to improve trust and conversions.</p>
+    <div class="tech-used">
+      <i class="devicon-html5-plain colored"></i>
+      <i class="devicon-css3-plain colored"></i>
+      <i class="devicon-javascript-plain colored"></i>
+      <i class="devicon-react-original colored"></i>
+    </div>
+    <a href="https://wilkophysio.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
+  </div>
+</div>
+
   <!-- Project 5: Cambridge Maintenance -->
   <div class="project-card" data-aos="fade-up">
     <div class="screenshot-frame">
@@ -291,6 +351,27 @@
       <a href="https://eco-fitness-2b6c5d715c47.herokuapp.com/" class="project-link" target="_blank"></a>
     </div>
   </div>
+
+  <!-- Project 9: ProEdge Coaching Sessions -->
+<div class="project-card" data-aos="fade-up">
+  <div class="screenshot-frame">
+    <video autoplay loop muted playsinline controls class="project-video">
+      <source src="assets/proedgecoaching.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="project-details">
+    <h3>💪 ProEdge Coaching – 1-1 & Group Sessions</h3>
+    <p><strong>Mission:</strong> Deliver personalized coaching programs for individuals and groups to improve fitness, performance, and wellbeing.</p>
+    <p><strong>Solution:</strong> Engaging session scheduling, interactive video demonstrations, progress tracking, and a clear call-to-action to book both 1-on-1 and group coaching sessions.</p>
+    <div class="tech-used">
+      <i class="devicon-html5-plain colored"></i>
+      <i class="devicon-css3-plain colored"></i>
+      <i class="devicon-javascript-plain colored"></i>
+    </div>
+    <a href="https://proedgecoaching.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
+  </div>
+</div>
 
   <!-- Project 8: Prop-Up Services Landing Page -->
 <div class="project-card" data-aos="fade-up">

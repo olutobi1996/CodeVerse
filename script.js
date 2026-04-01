@@ -33,74 +33,24 @@ const venusTexture = loader.load('./textures/8k_venus_surface.jpg');
 const starfield = loader.load('./textures/starfield.jpg');
 scene.background = starfield;
 
-// === VENUS PLANET ===
-const venusMaterial = new THREE.MeshStandardMaterial({
-  map: venusTexture,
-  roughness: 1,
-  metalness: 0.1,
-  emissive: new THREE.Color(0x111111),
-  emissiveIntensity: 0.25
+// === EARTH GLOBE ===
+const earthTexture = loader.load('https://ksenia-k.com/img/earth-map-colored.png');
+
+const globeGeometry = new THREE.IcosahedronGeometry(1.5, 22);
+
+const globeMaterial = new THREE.ShaderMaterial({
+  vertexShader: document.getElementById('vertex-shader-map').textContent,
+  fragmentShader: document.getElementById('fragment-shader-map').textContent,
+  uniforms: {
+    u_map_tex: { value: earthTexture },
+    u_dot_size: { value: 6.0 } // 👈 bigger so you SEE it
+  },
+  transparent: true,
+  depthWrite: false
 });
 
-const venus = new THREE.Mesh(
-  new THREE.SphereGeometry(1.2, 128, 128),
-  venusMaterial
-);
-
-// === GROUP FOR PLANET & LABELS ===
-const planetGroup = new THREE.Group();
-planetGroup.add(venus);
-scene.add(planetGroup);
-
-// === ORBITING TEXT: "Welcome to CodeVerse" ===
-const orbitText = 'Welcome to CodeVerse';
-const charCount = orbitText.length;
-const orbitRadius = 1.22;
-const charWidth = 0.16;
-const charHeight = 0.32;
-const orbitGroup = new THREE.Group();
-
-function createStyledCharTexture(char) {
-  const canvas = document.createElement('canvas');
-  canvas.width = 256;
-  canvas.height = 256;
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = 'rgba(0,0,0,0)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = 'white';
-  ctx.shadowColor = 'black';
-  ctx.shadowBlur = 10;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.font = 'bold 160px Orbitron, sans-serif';
-  ctx.fillText(char, canvas.width / 2, canvas.height / 2);
-
-  return new THREE.CanvasTexture(canvas);
-}
-
-for (let i = 0; i < charCount; i++) {
-  const char = orbitText[i];
-  if (char === ' ') continue;
-
-  const texture = createStyledCharTexture(char);
-  const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
-  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(charWidth, charHeight), material);
-
-  const angle = (i / charCount) * Math.PI * 2;
-  mesh.position.set(
-    orbitRadius * Math.sin(angle),
-    0,
-    orbitRadius * Math.cos(angle)
-  );
-  mesh.lookAt(0, 0, 0);
-  mesh.rotateY(Math.PI);
-  orbitGroup.add(mesh);
-}
-
-orbitGroup.position.y = 0;
-venus.add(orbitGroup);
+const globe = new THREE.Points(globeGeometry, globeMaterial);
+scene.add(globe);
 
 // === VENUS EXPRESS BANNER ===
 const bannerCanvas = document.createElement('canvas');
@@ -148,6 +98,7 @@ function animate() {
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
+  globe.rotation.y += 0.002;
 }
 animate();
 
@@ -157,6 +108,7 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
 
 
 

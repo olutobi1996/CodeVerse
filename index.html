@@ -2,18 +2,14 @@
 <html lang="en">
 
 <head>
-  <meta name="description"
-    content="CodeVerse by Tobi – Full-stack dev and creative thinker. Explore the intersection of technology and art." />
+  <meta name="description" content="CodeVerse by Tobi – Full-stack dev and creative thinker. Explore the intersection of technology and art." />
   <meta property="og:description" content="CodeVerse by Tobi – Full-stack dev and creative thinker." />
-
   <meta property="og:title" content="CodeVerse – Tobi's Dev Playground" />
   <meta property="og:image" content="/assets/og-image.jpg" />
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CodeVerse</title>
 
-  <!-- Import Map to resolve module specifiers -->
   <script type="importmap">
     {
       "imports": {
@@ -24,507 +20,702 @@
   </script>
 
   <link rel="stylesheet" href="style.css" />
-  <!-- Fonts and Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <script type="module" src="script.js"></script>
-  <!-- AOS Library -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
+  <script type="module" src="script.js"></script>
 </head>
 
 <body>
-  <section id="planet-intro">
-    <canvas id="mars-canvas"></canvas>
-  </section>
-  <canvas id="orbitParticles"></canvas>
 
-  <script id="vertex-shader-map" type="x-shader/x-vertex">
-uniform sampler2D u_map_tex;
-uniform float u_dot_size;
+  <!-- ═══════════════════════════════════ HERO ═══════════════════════════════════ -->
+  <section id="hero">
+    <canvas id="galaxy-bg"></canvas>
 
-varying float vOpacity;
-varying vec2 vUv;
-
-void main() {
-    vUv = uv;
-
-    float visibility = step(.2, texture2D(u_map_tex, uv).r);
-    gl_PointSize = visibility * u_dot_size;
-
-    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-    vOpacity = (1. / length(mvPosition.xyz) - .7);
-    vOpacity = clamp(vOpacity, .03, 1.);
-
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}
-</script>
-
-<script id="fragment-shader-map" type="x-shader/x-fragment">
-uniform sampler2D u_map_tex;
-
-varying float vOpacity;
-varying vec2 vUv;
-
-void main() {
-    vec3 color = texture2D(u_map_tex, vUv).rgb * 5.5; // brightens the Earth
-    float dot = 1. - smoothstep(.38, .4, length(gl_PointCoord.xy - vec2(.5)));
-    if (dot < 0.5) discard;
-    gl_FragColor = vec4(color, dot * vOpacity);
-}
-</script>
-
- <div class="welcome-header">
-  <h1>🌐 Welcome to CodeVerse</h1>
-</div>
-
-  <section class="planet-content hero-upgraded" id="hero">
-    <div class="stellar-panel">
-      <div class="glow-dome">
-        <h2>
-          <span class="neon-text">🌐 We Don’t Just Build Websites.</span><br />
-          <span class="neon-glow">🚀 We Launch Digital Worlds.</span>
-        </h2>
-        <p>
-          Welcome to <strong>Codeverse, </strong>your portal to bold digital experiences. We design fast, scalable
-          websites that are <strong>SEO-optimized</strong>, stunning, and built with purpose.
-        </p>
-        <p>
-          Whether you’re launching a startup or elevating your brand, every line of code is tailored to your unique
-          story, <strong>affordable</strong>, <strong>ambitious</strong>, and built from scratch.
-        </p>
-        <p>
-          We don’t just code. We craft <strong>interactive, immersive</strong> digital worlds, and we make them
-          personal.
-        </p>
+    <div class="hero-inner">
+      <div class="globe-wrap">
+        <canvas id="globe-canvas"></canvas>
+        <div class="globe-ring"></div>
+        <div class="globe-ring globe-ring--2"></div>
       </div>
+
+      <div class="hero-copy">
+        <p class="hero-eyebrow">Full-Stack Development Studio</p>
+        <h1 class="hero-title">Welcome to<br><span class="gradient-text">Codevers3</span></h1>
+        <p class="hero-sub">We don't just build websites — we engineer digital worlds.<br>Fast, scalable, SEO-optimised, and built from scratch.</p>
+        <div class="hero-ctas">
+          <a href="#work" class="btn btn--primary">View Our Work</a>
+          <a href="#contact" class="btn btn--ghost">Start a Project</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll to explore</span>
+      <div class="scroll-line"></div>
+    </div>
   </section>
 
-        <!-- Front-End Development Card -->
-    <div class="container">
-    <div class="card">
-        <div class="contentBx">
-            <h3>🚀 Front-End Development</h3>
-            <p>Blazing-fast, interactive web experiences tailored for humans and optimized for all devices.</p>
-            <a href="webdevelopment1.html">Learn More</a>
-        </div>
-    </div>
-
-    <!-- UX/UI Design & Branding Card -->
-    <div class="card">
-        <div class="contentBx">
-            <h3>🛰️ UX/UI Design & Branding</h3>
-            <p>Interfaces that connect, branding that resonates. Every touchpoint with purpose.</p>
-            <a href="webdevelopment2.html">Learn More</a>
-        </div>
-    </div>
-
-    <!-- Digital Strategy & Marketing Card -->
-    <div class="card">
-        <div class="contentBx">
-            <h3>🌌 Digital Strategy & Marketing</h3>
-            <p>From the stars to your customers SEO, email, and social strategies that convert.</p>
-            <a href="webdevelopment3.html">Learn More</a>
-        </div>
-    </div>
-
-    <!-- Custom Integrations Card -->
-    <div class="card">
-        <div class="contentBx">
-            <h3>🛸 Custom Integrations</h3>
-            <p>Building tools and integrations that keep your business light-years ahead.</p>
-            <a href="webdevelopment4.html">Learn More</a>
-        </div>
-    </div>
-</div>
-
-
-    <section class="case-studies-section">
-  <h2 class="section-title">🚀 Featured Missions</h2>
-
-  <!-- Project 1: Premium Serviced Offices in Ayr -->
-  <div class="project-card" data-aos="fade-up">
-    <div class="screenshot-frame">
-      <video autoplay loop muted playsinline controls class="project-video">
-        <source src="assets/formaspace.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <div class="project-details">
-      <h3>🏢 Ayr Serviced Offices</h3>
-      <p><strong>Mission:</strong> Elevate an office space company with a luxurious online presence.</p>
-      <p><strong>Solution:</strong> Elegant multi-page layout with gallery, booking inquiry, animated header, and local SEO.</p>
-      <div class="tech-used">
-        <i class="devicon-html5-plain colored"></i>
-        <i class="devicon-css3-plain colored"></i>
-        <i class="devicon-javascript-plain colored"></i>
-        <i class="devicon-wordpress-plain colored"></i>
+  <!-- ═══════════════════════════════════ INTRO PANEL ═══════════════════════════════════ -->
+  <section class="intro-section" id="about" data-aos="fade-up">
+    <div class="glass-panel intro-panel">
+      <div class="panel-badge">Our Mission</div>
+      <h2>We Don't Just Build Websites.<br><span class="gradient-text">We Launch Digital Worlds.</span></h2>
+      <div class="intro-body">
+        <p>Welcome to <strong>Codeverse</strong> — your portal to bold digital experiences. We design fast, scalable websites that are <strong>SEO-optimised</strong>, stunning, and built with purpose.</p>
+        <p>Whether you're launching a startup or elevating your brand, every line of code is tailored to your unique story — <strong>affordable</strong>, <strong>ambitious</strong>, and built from scratch.</p>
+        <p>We don't just code. We craft <strong>interactive, immersive</strong> digital worlds — and we make them personal.</p>
       </div>
-      <a href="https://formaspace.co.uk/" class="project-link" target="_blank">🌍 Visit Live</a>
     </div>
-  </div>
+  </section>
 
-  <!-- Project2: Route One Junior Performance Development -->
-<div class="project-card" data-aos="fade-up">
-  <div class="screenshot-frame">
-    <video autoplay loop muted playsinline controls class="project-video">
-      <source src="assets/route-one.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="project-details">
-    <h3>⚽ Route One Junior Performance Development</h3>
-    <p><strong>Mission:</strong> Build a clean, high-performance website for a UEFA A licensed coach delivering elite-level youth football development.</p>
-    <p><strong>Solution:</strong> Professional site showcasing small-group skill sessions, multi-sport training, and holiday football camps — with seamless booking, mobile-first design, and strong SEO foundations.</p>
-    <div class="tech-used">
-      <i class="devicon-html5-plain colored"></i>
-      <i class="devicon-css3-plain colored"></i>
-      <i class="devicon-javascript-plain colored"></i>
-      <i class="devicon-wordpress-plain colored"></i>
+  <!-- ═══════════════════════════════════ SERVICES ═══════════════════════════════════ -->
+  <section class="services-section" id="services">
+    <div class="section-header" data-aos="fade-up">
+      <p class="section-eyebrow">What We Do</p>
+      <h2 class="section-title">Our Services</h2>
     </div>
-    <a href="https://route-one.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
-  </div>
-</div>
-  <!-- Project 3: HoodHomes -->
-<div class="project-card" data-aos="fade-up">
-  <div class="screenshot-frame">
-    <video autoplay loop muted playsinline controls class="project-video">
-      <source src="assets/hoodhomes.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="project-details">
-    <h3>🏡 HoodHomes</h3>
-    <p><strong>Mission:</strong> Build a premium, high-converting website for a modern estate agency brand.</p>
-    <p><strong>Solution:</strong> Luxury black & gold website with property listings, online valuation tool, booking system, AI chatbot, blog, and full SEO optimization.</p>
-    <div class="tech-used">
-      <i class="devicon-html5-plain colored"></i>
-      <i class="devicon-css3-plain colored"></i>
-      <i class="devicon-javascript-plain colored"></i>
-      <i class="devicon-wordpress-plain colored"></i>
-    </div>
-    <a href="https://hoodhomes.co.uk" class="project-link" target="_blank">🌍 Visit Live</a>
-  </div>
-</div>
 
-<!-- Project: Play3 Football Coaching -->
-<div class="project-card" data-aos="fade-up">
-  <div class="screenshot-frame">
-    <video autoplay loop muted playsinline controls class="project-video">
-      <source src="assets/play3.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="project-details">
-    <h3>⚽ Play3 Football Coaching</h3>
-    <p><strong>Mission:</strong> Create a modern, high-converting website for a youth football coaching brand offering 1-to-1 sessions for boys and girls aged 8–16.</p>
-    <p><strong>Solution:</strong> Clean, mobile-first site with integrated email systems, Google questionnaire forms, seamless enquiry process, and performance-focused branding.</p>
-    <div class="tech-used">
-      <i class="devicon-html5-plain colored"></i>
-      <i class="devicon-css3-plain colored"></i>
-      <i class="devicon-javascript-plain colored"></i>
-      <i class="devicon-wordpress-plain colored"></i>
-    </div>
-    <a href="https://play3football.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
-  </div>
-</div>
+    <div class="services-grid">
+      <a href="webdevelopment1.html" class="service-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="service-icon">🚀</div>
+        <h3>Front-End Development</h3>
+        <p>Blazing-fast, interactive web experiences tailored for humans and optimised for all devices.</p>
+        <span class="service-link">Learn More <span class="arrow">→</span></span>
+      </a>
 
-  <!-- Project 4: Kids Coaching Milton Keynes -->
-  <div class="project-card" data-aos="fade-up">
-    <div class="screenshot-frame">
-      <video autoplay loop muted playsinline controls class="project-video">
-        <source src="assets/coachchicksen.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      <a href="webdevelopment2.html" class="service-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="service-icon">🛰️</div>
+        <h3>UX/UI Design &amp; Branding</h3>
+        <p>Interfaces that connect, branding that resonates. Every touchpoint crafted with purpose.</p>
+        <span class="service-link">Learn More <span class="arrow">→</span></span>
+      </a>
+
+      <a href="webdevelopment3.html" class="service-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="service-icon">🌌</div>
+        <h3>Digital Strategy &amp; Marketing</h3>
+        <p>From the stars to your customers — SEO, email, and social strategies that convert.</p>
+        <span class="service-link">Learn More <span class="arrow">→</span></span>
+      </a>
+
+      <a href="webdevelopment4.html" class="service-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="service-icon">🛸</div>
+        <h3>Custom Integrations</h3>
+        <p>Building tools and integrations that keep your business light-years ahead of the curve.</p>
+        <span class="service-link">Learn More <span class="arrow">→</span></span>
+      </a>
     </div>
-    <div class="project-details">
-      <h3>🧒 MK Kids Coaching</h3>
-      <p><strong>Mission:</strong> Create a fun, friendly, and trusted brand for a local youth coaching company.</p>
-      <p><strong>Solution:</strong> Colourful design, embedded booking form, testimonials, events page, and social links.</p>
-      <div class="tech-used">
-        <i class="devicon-html5-plain colored"></i>
-        <i class="devicon-css3-plain colored"></i>
-        <i class="devicon-javascript-plain colored"></i>
-        <i class="devicon-wordpress-plain colored"></i>
+  </section>
+
+  <!-- ═══════════════════════════════════ WORK ═══════════════════════════════════ -->
+  <section class="work-section" id="work">
+    <div class="section-header" data-aos="fade-up">
+      <p class="section-eyebrow">Case Studies</p>
+      <h2 class="section-title">Featured Missions</h2>
+    </div>
+
+    <!-- Project 1 -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/formaspace.mp4" type="video/mp4" />
+        </video>
       </div>
-      <a href="https://coachchicksen.netlify.app/" class="project-link" target="_blank">👨‍👩‍👧‍👦 Visit Live</a>
-    </div>
-  </div>
-
-  <!-- Project 10: Wilko Physio – Manchester Private Physio -->
-<div class="project-card" data-aos="fade-up">
-  <div class="screenshot-frame">
-    <video autoplay loop muted playsinline controls class="project-video">
-      <source src="assets/ryanwilkophysio.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="project-details">
-    <h3>🩺 Wilko Physio – Manchester Private Physio</h3>
-    <p><strong>Mission:</strong> Provide expert physiotherapy services in Manchester, including 1-on-1 treatment, group sessions, and advanced MRI diagnostics.</p>
-    <p><strong>Solution:</strong> Clean, professional site showcasing treatments, MRI scan availability, patient testimonials, easy booking forms, and clear service descriptions to improve trust and conversions.</p>
-    <div class="tech-used">
-      <i class="devicon-html5-plain colored"></i>
-      <i class="devicon-css3-plain colored"></i>
-      <i class="devicon-javascript-plain colored"></i>
-      <i class="devicon-react-original colored"></i>
-    </div>
-    <a href="https://wilkophysio.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
-  </div>
-</div>
-
-  <!-- Project 5: Cambridge Maintenance -->
-  <div class="project-card" data-aos="fade-up">
-    <div class="screenshot-frame">
-      <video autoplay loop muted playsinline controls class="project-video">
-        <source src="assets/propupservices.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <div class="project-details">
-      <h3>🔧 Cambridge Maintenance Co.</h3>
-      <p><strong>Mission:</strong> Build a premium, professional website for a local maintenance brand.</p>
-      <p><strong>Solution:</strong> Custom site with forms, testimonials, gallery, and modern logo branding. SEO-optimized.</p>
-      <div class="tech-used">
-        <i class="devicon-html5-plain colored"></i>
-        <i class="devicon-css3-plain colored"></i>
-        <i class="devicon-javascript-plain colored"></i>
-        <i class="devicon-wordpress-plain colored"></i>
+      <div class="project-info">
+        <span class="project-tag">Commercial Real Estate</span>
+        <h3>🏢 Ayr Serviced Offices</h3>
+        <p><span class="label">Mission:</span> Elevate an office space company with a luxurious online presence.</p>
+        <p><span class="label">Solution:</span> Elegant multi-page layout with gallery, booking inquiry, animated header, and local SEO.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://formaspace.co.uk/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
       </div>
-      <a href="https://prop-up-services.com/" class="project-link" target="_blank">🌍 Visit Live</a>
     </div>
-  </div>
 
-  <!-- Project 6: HoodHomes Landing Page -->
-<div class="project-card" data-aos="fade-up">
-  <div class="screenshot-frame">
-    <video autoplay loop muted playsinline controls class="project-video">
-      <source src="assets/hoodhomes-landing.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="project-details">
-    <h3>📈 HoodHomes – Ads Landing Page</h3>
-    <p><strong>Mission:</strong> Build a high-converting landing page for Google & Facebook ad campaigns targeting property sellers and landlords in Cambridge.</p>
-    <p><strong>Solution:</strong> Conversion-focused layout with strong call-to-actions, instant valuation prompts, trust signals, and mobile-first optimization to maximise lead generation.</p>
-    <div class="tech-used">
-      <i class="devicon-html5-plain colored"></i>
-      <i class="devicon-css3-plain colored"></i>
-      <i class="devicon-javascript-plain colored"></i>
-    </div>
-    <a href="https://hoodhomeslanding.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
-  </div>
-</div>
-
-  <!-- Project 7: EcoFitness Marketplace -->
-  <div class="project-card" data-aos="fade-up">
-    <div class="screenshot-frame">
-      <video autoplay loop muted playsinline controls class="project-video">
-        <source src="assets/ecofitness.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <div class="project-details">
-      <h3>🌱 EcoFitness Marketplace</h3>
-      <p><strong>Mission:</strong> Launch a sustainable e-commerce platform for eco-conscious fitness products.</p>
-      <p><strong>Solution:</strong> Full-stack build with Stripe checkout, SEO, blog, reviews, email flows, and a community hub.</p>
-      <div class="tech-used">
-        <i class="devicon-react-original colored"></i>
-        <i class="devicon-nodejs-plain colored"></i>
-        <i class="devicon-mongodb-plain colored"></i>
-        <i class="devicon-css3-plain colored"></i>
-        <i class="devicon-wordpress-plain colored"></i>
+    <!-- Project 2 -->
+    <div class="project-card project-card--reverse" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/route-one.mp4" type="video/mp4" />
+        </video>
       </div>
-      <a href="https://eco-fitness-2b6c5d715c47.herokuapp.com/" class="project-link" target="_blank"></a>
+      <div class="project-info">
+        <span class="project-tag">Sports & Coaching</span>
+        <h3>⚽ Route One Junior Performance</h3>
+        <p><span class="label">Mission:</span> Build a high-performance website for a UEFA A licensed coach delivering elite-level youth football development.</p>
+        <p><span class="label">Solution:</span> Professional site showcasing small-group sessions, multi-sport training, and holiday camps — with seamless booking and mobile-first design.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://route-one.netlify.app/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
     </div>
-  </div>
 
-  <!-- Project 9: ProEdge Coaching Sessions -->
-<div class="project-card" data-aos="fade-up">
-  <div class="screenshot-frame">
-    <video autoplay loop muted playsinline controls class="project-video">
-      <source src="assets/proedgecoaching.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="project-details">
-    <h3>💪 ProEdge Coaching – 1-1 & Group Sessions</h3>
-    <p><strong>Mission:</strong> Deliver personalized coaching programs for individuals and groups to improve fitness, performance, and wellbeing.</p>
-    <p><strong>Solution:</strong> Engaging session scheduling, interactive video demonstrations, progress tracking, and a clear call-to-action to book both 1-on-1 and group coaching sessions.</p>
-    <div class="tech-used">
-      <i class="devicon-html5-plain colored"></i>
-      <i class="devicon-css3-plain colored"></i>
-      <i class="devicon-javascript-plain colored"></i>
+    <!-- Project 3 -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/hoodhomes.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Estate Agency</span>
+        <h3>🏡 HoodHomes</h3>
+        <p><span class="label">Mission:</span> Build a premium, high-converting website for a modern estate agency brand.</p>
+        <p><span class="label">Solution:</span> Luxury black &amp; gold website with property listings, online valuation tool, booking system, AI chatbot, blog, and full SEO optimisation.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://hoodhomes.co.uk" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
     </div>
-    <a href="https://proedgecoaching.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
-  </div>
-</div>
 
-  <!-- Project 8: Prop-Up Services Landing Page -->
-<div class="project-card" data-aos="fade-up">
-  <div class="screenshot-frame">
-    <video autoplay loop muted playsinline controls class="project-video">
-      <source src="assets/prop-up-services-landing.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-  <div class="project-details">
-    <h3>🚀 Prop-Up Services – Ads Landing Page</h3>
-    <p><strong>Mission:</strong> Create a high-performance landing page designed specifically for paid traffic campaigns in Cambridge.</p>
-    <p><strong>Solution:</strong> Clean, persuasive layout with clear service breakdown, trust-building content, fast-loading structure, and streamlined enquiry forms to drive conversions.</p>
-    <div class="tech-used">
-      <i class="devicon-html5-plain colored"></i>
-      <i class="devicon-css3-plain colored"></i>
-      <i class="devicon-javascript-plain colored"></i>
+    <!-- Project 4 -->
+    <div class="project-card project-card--reverse" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/play3.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Youth Coaching</span>
+        <h3>⚽ Play3 Football Coaching</h3>
+        <p><span class="label">Mission:</span> Create a modern, high-converting website for a youth football coaching brand offering 1-to-1 sessions for boys and girls aged 8–16.</p>
+        <p><span class="label">Solution:</span> Clean, mobile-first site with integrated email systems, Google questionnaire forms, seamless enquiry process, and performance-focused branding.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://play3football.netlify.app/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
     </div>
-    <a href="https://prop-up-landingpage.netlify.app/" class="project-link" target="_blank">🌍 Visit Live</a>
-  </div>
-</div>
-</section>
 
-  <!-- Customer Reviews -->
-      <section class="reviews-section" id="reviews">
-        <h2 class="section-title">✨ Trusted Across Platforms</h2>
-        <div class="review-stars-bg"></div>
+    <!-- Project 5 -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/coachchicksen.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Youth Coaching</span>
+        <h3>🧒 MK Kids Coaching</h3>
+        <p><span class="label">Mission:</span> Create a fun, friendly, and trusted brand for a local youth coaching company.</p>
+        <p><span class="label">Solution:</span> Colourful design, embedded booking form, testimonials, events page, and social links.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://coachchicksen.netlify.app/" class="btn btn--outline" target="_blank">👨‍👩‍👧‍👦 Visit Live</a>
+      </div>
+    </div>
 
-        <div class="reviews-grid">
-          <div class="review-card">
-            <p>“CodeVerse Changed our brand into a proffesional outfit. Fast, sleek, and beyond expectations.”</p>
-            <span>— Sarah, Starborn Studio 🌌</span>
+    <!-- Project 6 -->
+    <div class="project-card project-card--reverse" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/ryanwilkophysio.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Healthcare</span>
+        <h3>🩺 Wilko Physio – Manchester</h3>
+        <p><span class="label">Mission:</span> Provide expert physiotherapy services in Manchester, including 1-on-1 treatment, group sessions, and advanced MRI diagnostics.</p>
+        <p><span class="label">Solution:</span> Clean, professional site showcasing treatments, MRI scan availability, patient testimonials, easy booking forms, and clear service descriptions to improve trust and conversions.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-react-original colored"></i>
+        </div>
+        <a href="https://wilkophysio.netlify.app/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
+    </div>
+
+    <!-- Project 7 -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/propupservices.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Property Maintenance</span>
+        <h3>🔧 Cambridge Maintenance Co.</h3>
+        <p><span class="label">Mission:</span> Build a premium, professional website for a local maintenance brand.</p>
+        <p><span class="label">Solution:</span> Custom site with forms, testimonials, gallery, and modern logo branding. Fully SEO-optimised.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://prop-up-services.com/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
+    </div>
+
+    <!-- Project 8 -->
+    <div class="project-card project-card--reverse" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/hoodhomes-landing.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Landing Page</span>
+        <h3>📈 HoodHomes – Ads Landing Page</h3>
+        <p><span class="label">Mission:</span> Build a high-converting landing page for Google &amp; Facebook ad campaigns targeting property sellers and landlords in Cambridge.</p>
+        <p><span class="label">Solution:</span> Conversion-focused layout with strong call-to-actions, instant valuation prompts, trust signals, and mobile-first optimisation to maximise lead generation.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+        </div>
+        <a href="https://hoodhomeslanding.netlify.app/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
+    </div>
+
+    <!-- Project 9 -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/ecofitness.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">E-Commerce</span>
+        <h3>🌱 EcoFitness Marketplace</h3>
+        <p><span class="label">Mission:</span> Launch a sustainable e-commerce platform for eco-conscious fitness products.</p>
+        <p><span class="label">Solution:</span> Full-stack build with Stripe checkout, SEO, blog, reviews, email flows, and a community hub.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-react-original colored"></i>
+          <i class="devicon-nodejs-plain colored"></i>
+          <i class="devicon-mongodb-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-wordpress-plain colored"></i>
+        </div>
+        <a href="https://eco-fitness-2b6c5d715c47.herokuapp.com/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
+    </div>
+
+    <!-- Project 10 -->
+    <div class="project-card project-card--reverse" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/proedgecoaching.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Fitness Coaching</span>
+        <h3>💪 ProEdge Coaching</h3>
+        <p><span class="label">Mission:</span> Deliver personalised coaching programs for individuals and groups to improve fitness, performance, and wellbeing.</p>
+        <p><span class="label">Solution:</span> Engaging session scheduling, interactive video demonstrations, progress tracking, and a clear call-to-action to book 1-on-1 and group coaching sessions.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+        </div>
+        <a href="https://proedgecoaching.netlify.app/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
+    </div>
+
+    <!-- Project 11 -->
+    <div class="project-card" data-aos="fade-up">
+      <div class="project-media">
+        <video autoplay loop muted playsinline controls class="project-video">
+          <source src="assets/prop-up-services-landing.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="project-info">
+        <span class="project-tag">Landing Page</span>
+        <h3>🚀 Prop-Up Services – Ads Landing Page</h3>
+        <p><span class="label">Mission:</span> Create a high-performance landing page designed specifically for paid traffic campaigns in Cambridge.</p>
+        <p><span class="label">Solution:</span> Clean, persuasive layout with clear service breakdown, trust-building content, fast-loading structure, and streamlined enquiry forms to drive conversions.</p>
+        <div class="tech-stack-row">
+          <i class="devicon-html5-plain colored"></i>
+          <i class="devicon-css3-plain colored"></i>
+          <i class="devicon-javascript-plain colored"></i>
+        </div>
+        <a href="https://prop-up-landingpage.netlify.app/" class="btn btn--outline" target="_blank">🌍 Visit Live</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════ REVIEWS ═══════════════════════════════════ -->
+  <section class="reviews-section" id="reviews">
+    <div class="section-header" data-aos="fade-up">
+      <p class="section-eyebrow">Social Proof</p>
+      <h2 class="section-title">✨ Trusted Across Platforms</h2>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="review-stars">★★★★★</div>
+        <p>"CodeVerse changed our brand into a professional outfit. Fast, sleek, and beyond expectations."</p>
+        <span class="reviewer">— Sarah, Starborn Studio 🌌</span>
+      </div>
+      <div class="review-card" data-aos="fade-up" data-aos-delay="60">
+        <div class="review-stars">★★★★★</div>
+        <p>"Best investment ever. Our site is stunning and functional. Clients love it."</p>
+        <span class="reviewer">— Joe, Cambridge Maintenance 🚀</span>
+      </div>
+      <div class="review-card" data-aos="fade-up" data-aos-delay="120">
+        <div class="review-stars">★★★★★</div>
+        <p>"Professional from start to finish. The website reflects exactly what Play3 stands for — high standards and real player development."</p>
+        <span class="reviewer">— Frank Vincent, Play3 Football Coaching ⚽</span>
+      </div>
+      <div class="review-card" data-aos="fade-up" data-aos-delay="180">
+        <div class="review-stars">★★★★★</div>
+        <p>"CodeVerse understood the performance side of our brand instantly. The site looks elite and the booking system runs perfectly."</p>
+        <span class="reviewer">— Liam Hogan, Route One Junior Performance 🔵</span>
+      </div>
+      <div class="review-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="review-stars">★★★★★</div>
+        <p>"The landing page completely changed our ad results. Clean, straight to the point, and built to convert."</p>
+        <span class="reviewer">— Jade, Prop-Up Services 🔧</span>
+      </div>
+      <div class="review-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="review-stars">★★★★★</div>
+        <p>"Exactly what we needed for paid ads. Strong, premium, and built to generate serious property enquiries."</p>
+        <span class="reviewer">— Joe, HoodHomes 🏡</span>
+      </div>
+      <div class="review-card" data-aos="fade-up" data-aos-delay="360">
+        <div class="review-stars">★★★★★</div>
+        <p>"From design to deployment — flawless experience. They get the vision."</p>
+        <span class="reviewer">— Ava, EcoFitness 🌿</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ TECH STACK ═══════════════════════════════════ -->
+  <section class="tech-section" id="tech-stack" data-aos="fade-up">
+    <div class="section-header">
+      <p class="section-eyebrow">Our Arsenal</p>
+      <h2 class="section-title">Technologies We Use</h2>
+    </div>
+
+    <div class="tech-scroll-wrapper">
+      <div class="tech-scroll">
+        <div class="tech-track">
+          <div class="tech-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
+          <div class="tech-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
+          <div class="tech-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
+          <div class="tech-item"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></div>
+          <div class="tech-item"><i class="devicon-react-original colored"></i><span>React</span></div>
+          <div class="tech-item"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></div>
+          <div class="tech-item"><i class="devicon-vuejs-plain colored"></i><span>Vue.js</span></div>
+          <div class="tech-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
+          <div class="tech-item"><i class="devicon-express-original colored"></i><span>Express</span></div>
+          <div class="tech-item"><i class="devicon-php-plain colored"></i><span>PHP</span></div>
+          <div class="tech-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
+          <div class="tech-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>
+          <div class="tech-item"><i class="devicon-wordpress-plain colored"></i><span>WordPress</span></div>
+          <div class="tech-item"><img src="assets/shopify_glyph.svg" alt="Shopify" class="shopify-icon"><span>Shopify</span></div>
+          <div class="tech-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+          <div class="tech-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
+          <div class="tech-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+        </div>
+        <!-- duplicate for seamless loop -->
+        <div class="tech-track" aria-hidden="true">
+          <div class="tech-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
+          <div class="tech-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
+          <div class="tech-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
+          <div class="tech-item"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></div>
+          <div class="tech-item"><i class="devicon-react-original colored"></i><span>React</span></div>
+          <div class="tech-item"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></div>
+          <div class="tech-item"><i class="devicon-vuejs-plain colored"></i><span>Vue.js</span></div>
+          <div class="tech-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
+          <div class="tech-item"><i class="devicon-express-original colored"></i><span>Express</span></div>
+          <div class="tech-item"><i class="devicon-php-plain colored"></i><span>PHP</span></div>
+          <div class="tech-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
+          <div class="tech-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>
+          <div class="tech-item"><i class="devicon-wordpress-plain colored"></i><span>WordPress</span></div>
+          <div class="tech-item"><img src="assets/shopify_glyph.svg" alt="Shopify" class="shopify-icon"><span>Shopify</span></div>
+          <div class="tech-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+          <div class="tech-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
+          <div class="tech-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ CONTACT ═══════════════════════════════════ -->
+  <footer class="contact-section" id="contact">
+    <div class="contact-inner" data-aos="fade-up">
+      <p class="section-eyebrow">Let's Build</p>
+      <h2 class="section-title">📬 Connect with CodeVerse HQ</h2>
+      <p class="contact-sub">Ready to launch your next project? Drop us a message from anywhere in the universe.</p>
+
+      <form name="footer-contact" method="POST" netlify data-netlify="true"
+        netlify-honeypot="bot-field" action="/thank-you" class="contact-form">
+        <input type="hidden" name="form-name" value="footer-contact" />
+        <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Tobi Smith" required />
           </div>
-          <div class="review-card">
-            <p>“Best investment ever. Our site is stunning and functional. Clients love it.”</p>
-            <span>— Joe, Cambridge Maintenance 🚀</span>
-          </div>
-          <div class="review-card">
-  <p>“Professional from start to finish. The website reflects exactly what Play3 stands for — high standards and real player development.”</p>
-  <span>— Frank Vincent, Play3 Football Coaching ⚽</span>
-</div>
-
-<div class="review-card">
-  <p>“CodeVerse understood the performance side of our brand instantly. The site looks elite and the booking system runs perfectly.”</p>
-  <span>— Liam Hogan, Route One Junior Performance 🔵</span>
-</div>
-
-<div class="review-card">
-  <p>“The landing page completely changed our ad results. Clean, straight to the point, and built to convert.”</p>
-  <span>— Jade, Prop-Up Services 🔧</span>
-</div>
-
-<div class="review-card">
-  <p>“Exactly what we needed for paid ads. Strong, premium, and built to generate serious property enquiries.”</p>
-  <span>— Joe, HoodHomes 🏡</span>
-</div>
-
-          <div class="review-card">
-            <p>“From design to deployment — flawless experience. They get the vision.”</p>
-            <span>— Ava, EcoFitness 🌿</span>
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="tobi@example.com" required />
           </div>
         </div>
-      </section>
-
-      <section class="tech-stack" id="tech-stack" data-aos="fade-up">
-        <h2>Technologies We Use</h2>
-        <div class="tech-scroll-wrapper">
-          <div class="tech-scroll">
-
-            <!-- ONE SET -->
-            <div class="tech-grid">
-              <div class="tech-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
-              <div class="tech-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
-              <div class="tech-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
-              <div class="tech-item"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></div>
-              <div class="tech-item"><i class="devicon-react-original colored"></i><span>React</span></div>
-              <div class="tech-item"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></div>
-              <div class="tech-item"><i class="devicon-vuejs-plain colored"></i><span>Vue.js</span></div>
-              <div class="tech-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
-              <div class="tech-item"><i class="devicon-express-original colored"></i><span>Express</span></div>
-              <div class="tech-item"><i class="devicon-php-plain colored"></i><span>PHP</span></div>
-              <div class="tech-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
-              <div class="tech-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>
-              <div class="tech-item"><i class="devicon-wordpress-plain colored"></i><span>WordPress</span></div>
-              <div class="tech-item">
-                <img src="assets/shopify_glyph.svg" alt="Shopify" class="shopify-icon">
-                <span>Shopify</span>
-              </div>
-              <div class="tech-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
-              <div class="tech-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
-              <div class="tech-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
-            </div>
-
-            <!-- DUPLICATE for seamless scroll -->
-            <div class="tech-grid">
-              <div class="tech-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
-              <div class="tech-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
-              <div class="tech-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
-              <div class="tech-item"><i class="devicon-typescript-plain colored"></i><span>TypeScript</span></div>
-              <div class="tech-item"><i class="devicon-react-original colored"></i><span>React</span></div>
-              <div class="tech-item"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></div>
-              <div class="tech-item"><i class="devicon-vuejs-plain colored"></i><span>Vue.js</span></div>
-              <div class="tech-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
-              <div class="tech-item"><i class="devicon-express-original colored"></i><span>Express</span></div>
-              <div class="tech-item"><i class="devicon-php-plain colored"></i><span>PHP</span></div>
-              <div class="tech-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
-              <div class="tech-item"><i class="devicon-mongodb-plain colored"></i><span>MongoDB</span></div>
-              <div class="tech-item"><i class="devicon-wordpress-plain colored"></i><span>WordPress</span></div>
-              <div class="tech-item">
-                <img src="assets/shopify_glyph.svg" alt="Shopify" class="shopify-icon">
-                <span>Shopify</span>
-              </div>
-              <div class="tech-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
-              <div class="tech-item"><i class="devicon-github-original colored"></i><span>GitHub</span></div>
-              <div class="tech-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
-            </div>
-
-          </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project..." rows="5" required></textarea>
         </div>
-      </section>
+        <button type="submit" class="btn btn--primary btn--full">Send Transmission ✦</button>
+      </form>
 
-      <footer class="footer-contact-section" id="contact">
-        <div class="footer-content-wrapper">
-          <h2 class="section-title">📬 Connect with CodeVerse HQ</h2>
-          <p>Ready to launch your next project? Drop us a message from anywhere in the universe.</p>
-
-          <form name="footer-contact"
-      method="POST"
-      netlify
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/thank-you" 
-      class="footer-contact-form">
-
-  <input type="hidden" name="form-name" value="footer-contact" />
-
-  <p hidden>
-    <label>Don’t fill this out: <input name="bot-field" /></label>
-  </p>
-
-  <input type="text" name="name" placeholder="🚀 Your Name" required />
-  <input type="email" name="email" placeholder="📡 Your Email" required />
-  <textarea name="message" placeholder="🌌 Your Message" rows="5" required></textarea>
-
-  <button type="submit">Send Transmission</button>
-
-</form>
-
-          <div class="footer-bottom">
-            <div class="social-links">
-              <a href="https://instagram.com/codevers3" target="_blank" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-              </a>
-            </div>
-            <p>© 2025 CodeVerse. All rights reserved.</p>
-          </div>
+      <div class="footer-bottom">
+        <div class="social-links">
+          <a href="https://instagram.com/codevers3" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
         </div>
-      </footer>
-      <script> AOS.init({
-          duration: 1000,
-          easing: 'ease-in-out',
-          once: true
-        });</script>
+        <p class="copyright">© 2025 CodeVerse. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════ GLOBE + GALAXY SCRIPTS ═══════════════════════════════════ -->
+  <script>
+    // ── Galaxy background ──────────────────────────────────────────────────────
+    (function () {
+      const canvas = document.getElementById('galaxy-bg');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function initStars() {
+        stars = [];
+        for (let i = 0; i < 320; i++) {
+          stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.4 + 0.2,
+            a: Math.random(),
+            speed: Math.random() * 0.003 + 0.001,
+            drift: (Math.random() - 0.5) * 0.05
+          });
+        }
+      }
+
+      function drawStars(t) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(s => {
+          s.a += s.speed;
+          s.x += s.drift;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.x < 0) s.x = canvas.width;
+          const alpha = (Math.sin(s.a) * 0.5 + 0.5) * 0.85 + 0.15;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(180,230,255,${alpha})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(drawStars);
+      }
+
+      window.addEventListener('resize', () => { resize(); initStars(); });
+      resize();
+      initStars();
+      requestAnimationFrame(drawStars);
+    })();
+
+    // ── 3D Glassmorphic Globe ──────────────────────────────────────────────────
+    (function () {
+      const canvas = document.getElementById('globe-canvas');
+      const ctx = canvas.getContext('2d');
+      const SIZE = Math.min(window.innerWidth < 700 ? 300 : 420, 480);
+      canvas.width = SIZE;
+      canvas.height = SIZE;
+      const cx = SIZE / 2, cy = SIZE / 2, R = SIZE * 0.42;
+
+      // lat/lng dots for a stylised continent outline
+      const continentDots = generateContinentDots();
+
+      let angle = 0;
+
+      function generateContinentDots() {
+        const dots = [];
+        // Simplified lat/lng point cloud for major landmasses
+        const regions = [
+          // North America
+          ...scatter(45, -100, 20, 18, 120),
+          // South America
+          ...scatter(-15, -58, 18, 16, 90),
+          // Europe
+          ...scatter(52, 15, 10, 8, 70),
+          // Africa
+          ...scatter(5, 22, 22, 20, 130),
+          // Asia
+          ...scatter(45, 90, 25, 30, 200),
+          // Australia
+          ...scatter(-27, 134, 10, 8, 60),
+          // Greenland
+          ...scatter(72, -42, 7, 6, 30),
+        ];
+        return regions;
+      }
+
+      function scatter(latC, lngC, latSpread, lngSpread, count) {
+        const pts = [];
+        for (let i = 0; i < count; i++) {
+          const lat = latC + (Math.random() - 0.5) * latSpread;
+          const lng = lngC + (Math.random() - 0.5) * lngSpread;
+          pts.push({ lat: lat * Math.PI / 180, lng: lng * Math.PI / 180 });
+        }
+        return pts;
+      }
+
+      function latLngTo3D(lat, lng, rot) {
+        // rotate around Y axis by rot
+        const x0 = Math.cos(lat) * Math.sin(lng);
+        const y0 = Math.sin(lat);
+        const z0 = Math.cos(lat) * Math.cos(lng);
+        const x1 = x0 * Math.cos(rot) + z0 * Math.sin(rot);
+        const z1 = -x0 * Math.sin(rot) + z0 * Math.cos(rot);
+        return { x: x1, y: y0, z: z1 };
+      }
+
+      function drawGlobe() {
+        ctx.clearRect(0, 0, SIZE, SIZE);
+
+        // --- Atmosphere glow ---
+        const atmos = ctx.createRadialGradient(cx, cy, R * 0.85, cx, cy - R * 0.1, R * 1.22);
+        atmos.addColorStop(0, 'rgba(0,180,255,0)');
+        atmos.addColorStop(0.6, 'rgba(0,180,255,0.06)');
+        atmos.addColorStop(1, 'rgba(0,180,255,0.18)');
+        ctx.beginPath();
+        ctx.arc(cx, cy, R * 1.22, 0, Math.PI * 2);
+        ctx.fillStyle = atmos;
+        ctx.fill();
+
+        // --- Ocean base ---
+        const oceanGrad = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.25, R * 0.05, cx, cy, R);
+        oceanGrad.addColorStop(0, '#0d3a5c');
+        oceanGrad.addColorStop(0.5, '#071e36');
+        oceanGrad.addColorStop(1, '#020d1a');
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.fillStyle = oceanGrad;
+        ctx.fill();
+
+        // --- Grid lines ---
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.clip();
+
+        // Latitude lines
+        for (let lat = -75; lat <= 75; lat += 30) {
+          const latRad = lat * Math.PI / 180;
+          const yLine = cy - Math.sin(latRad) * R;
+          const rLine = Math.cos(latRad) * R;
+          ctx.beginPath();
+          ctx.ellipse(cx, yLine, rLine, rLine * 0.28, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(0,200,255,0.08)';
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+        // Longitude lines
+        for (let lng = 0; lng < 360; lng += 30) {
+          const lngRad = (lng + angle) * Math.PI / 180;
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, Math.abs(Math.cos(lngRad)) * R, R, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(0,200,255,0.07)';
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // --- Continent dots ---
+        continentDots.forEach(pt => {
+          const p = latLngTo3D(pt.lat, pt.lng, angle * Math.PI / 180);
+          if (p.z < -0.1) return; // behind globe
+          const screenX = cx + p.x * R;
+          const screenY = cy - p.y * R;
+          const depth = (p.z + 1) / 2;
+          const dotSize = 1.5 + depth * 1.2;
+          const alpha = 0.3 + depth * 0.7;
+
+          ctx.beginPath();
+          ctx.arc(screenX, screenY, dotSize, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0,230,200,${alpha})`;
+          ctx.fill();
+        });
+
+        // --- Glass highlight ---
+        const glassGrad = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, 0, cx, cy, R);
+        glassGrad.addColorStop(0, 'rgba(255,255,255,0.18)');
+        glassGrad.addColorStop(0.4, 'rgba(255,255,255,0.04)');
+        glassGrad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.fillStyle = glassGrad;
+        ctx.fill();
+
+        // --- Specular highlight ---
+        const spec = ctx.createRadialGradient(cx - R * 0.38, cy - R * 0.42, 0, cx - R * 0.3, cy - R * 0.3, R * 0.38);
+        spec.addColorStop(0, 'rgba(255,255,255,0.28)');
+        spec.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.fillStyle = spec;
+        ctx.fill();
+
+        // --- Rim light ---
+        const rim = ctx.createRadialGradient(cx, cy, R * 0.78, cx, cy, R);
+        rim.addColorStop(0, 'rgba(0,180,255,0)');
+        rim.addColorStop(0.7, 'rgba(0,180,255,0.04)');
+        rim.addColorStop(1, 'rgba(0,220,255,0.22)');
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.fillStyle = rim;
+        ctx.fill();
+
+        // --- Border ---
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(0,200,255,0.35)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        angle += 0.18;
+        requestAnimationFrame(drawGlobe);
+      }
+
+      drawGlobe();
+    })();
+
+    // ── AOS init ───────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true, offset: 60 });
+    });
+  </script>
 </body>
-
 </html>
